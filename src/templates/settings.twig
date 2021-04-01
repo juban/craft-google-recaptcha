@@ -1,0 +1,98 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Google Recaptcha plugin for Craft CMS 3.x
+ *
+ * Google Recaptcha Settings.twig
+ *
+ * @author    Simplon.Prod
+ * @copyright Copyright (c) 2021 Simplon.Prod
+ * @link      https://www.simplonprod.co
+ * @package   GoogleRecaptcha
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    label: "API Version"|t('google-recaptcha'),
+    instructions: "Select the reCAPTCHA version."|t('google-recaptcha'),
+    id: 'version',
+    name: 'version',
+    value: settings.version,
+    options: {
+        3: 'v3',
+        2: 'v2',
+    },
+    errors: settings.getErrors('version'),
+    toggle: true,
+}) }}
+
+{{ forms.autosuggestField({
+    label: "Site Key"|t('google-recaptcha'),
+    instructions: "Enter the reCAPTCHA site key here."|t('google-recaptcha'),
+    id: 'siteKey',
+    name: 'siteKey',
+    required: true,
+    suggestEnvVars: true,
+    value: settings.siteKey,
+    errors: settings.getErrors('siteKey')
+}) }}
+
+
+{{ forms.autosuggestField({
+    label: "Secret Key"|t('google-recaptcha'),
+    instructions: "Enter the reCAPTCHA secret key here."|t('google-recaptcha'),
+    id: 'secretKey',
+    name: 'secretKey',
+    required: true,
+    suggestEnvVars: true,
+    value: settings.secretKey,
+    errors: settings.getErrors('secretKey')
+}) }}
+
+<div id="2" {{ settings.version == 3 ? 'class="hidden"' }}>
+
+    {{ forms.selectField({
+        label: "Size"|t('google-recaptcha'),
+        instructions: "Select the size of the reCAPTCHA widget."|t('google-recaptcha'),
+        id: 'size',
+        name: 'size',
+        value: settings.size,
+        options: {
+            'normal': 'Normal'|t('google-recaptcha'),
+            'compact': 'Compact'|t('google-recaptcha'),
+            'invisible': 'Invisible'|t('google-recaptcha'),
+        },
+        errors: settings.getErrors('size')
+    }) }}
+
+    {{ forms.selectField({
+        label: "Theme"|t('google-recaptcha'),
+        instructions: "Select the color theme of the reCAPTCHA widget."|t('google-recaptcha'),
+        id: 'theme',
+        name: 'theme',
+        value: settings.theme,
+        options: {
+            'light': 'Light'|t('google-recaptcha'),
+            'dark': 'Dark'|t('google-recaptcha'),
+        },
+        errors: settings.getErrors('theme')
+    }) }}
+
+    {{ forms.selectField({
+        label: "Badge"|t('google-recaptcha'),
+        instructions: "Select the position of the reCAPTCHA badge."|t('google-recaptcha'),
+        id: 'badge',
+        name: 'badge',
+        value: settings.badge,
+        options: {
+            'bottomright': 'Bottom right'|t('google-recaptcha'),
+            'bottomleft': 'Bottom left'|t('google-recaptcha'),
+            'inline': 'Inline'|t('google-recaptcha'),
+        },
+        errors: settings.getErrors('badge')
+    }) }}
+
+</div>
