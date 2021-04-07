@@ -97,10 +97,11 @@ class GoogleRecaptchaVariable
      */
     private static function _getV2Tag(string $id, string $siteKey, array $options = [], string $size, string $theme, string $badge): string
     {
+        $recaptchaCallbackName = StringHelper::camelCase($id);
         $tag = Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id]));
         $tag .= '
         <script type="text/javascript">
-            var recaptchaCallback_' . $id . ' = function() {
+            var ' . $recaptchaCallbackName . ' = function() {
                 var widgetId = grecaptcha.render("' . $id . '", {
                     sitekey : "' . $siteKey . '",
                     size : "' . $size . '",
@@ -110,7 +111,7 @@ class GoogleRecaptchaVariable
                 ' . ($size == 'invisible' ? 'grecaptcha.execute(widgetId);' : '') . '
             };
         </script>
-        <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback_' . $id . '&render=explicit&hl=' . Craft::$app->getSites()->getCurrentSite()->language . '" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=' . $recaptchaCallbackName . '&render=explicit&hl=' . Craft::$app->getSites()->getCurrentSite()->language . '" async defer></script>
         ';
         return $tag;
     }
