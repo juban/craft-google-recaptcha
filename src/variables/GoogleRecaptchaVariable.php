@@ -100,7 +100,7 @@ class GoogleRecaptchaVariable
         $tag = Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id]));
         $tag .= '
         <script type="text/javascript">
-            var recaptchaCallback = function() {
+            var recaptchaCallback_' . $id . ' = function() {
                 var widgetId = grecaptcha.render("' . $id . '", {
                     sitekey : "' . $siteKey . '",
                     size : "' . $size . '",
@@ -110,7 +110,7 @@ class GoogleRecaptchaVariable
                 ' . ($size == 'invisible' ? 'grecaptcha.execute(widgetId);' : '') . '
             };
         </script>
-        <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit&hl=' . Craft::$app->getSites()->getCurrentSite()->language . '" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback_' . $id . '&render=explicit&hl=' . Craft::$app->getSites()->getCurrentSite()->language . '" async defer></script>
         ';
         return $tag;
     }
