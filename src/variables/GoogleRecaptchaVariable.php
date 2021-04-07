@@ -37,13 +37,14 @@ class GoogleRecaptchaVariable
 
     /**
      * Render the reCAPTCHA widget
-     *     {{ craft.googleRecaptcha.render(options) }}
+     * {{ craft.googleRecaptcha.render(options, instantRender) }}
      *
      * @param array $options
+     * @param bool $instantRender
      * @return Markup
      * @throws \craft\errors\SiteNotFoundException
      */
-    public function render(array $options = [])
+    public function render(array $options = [], bool $instantRender = false)
     {
         $recaptchaTag = '';
         $settings = GoogleRecaptcha::$plugin->getSettings();
@@ -55,7 +56,7 @@ class GoogleRecaptchaVariable
         if ((int)$settings->version === 3) {
             $recaptchaTag = self::_getV3Tag($id, $siteKey, $options);
         } else {
-            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, $settings->size, $settings->theme, $settings->badge);
+            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, $settings->size, $settings->theme, $settings->badge, $instantRender);
         }
 
         return Template::raw($recaptchaTag);
@@ -95,7 +96,7 @@ class GoogleRecaptchaVariable
      * @return string
      * @throws \craft\errors\SiteNotFoundException
      */
-    private static function _getV2Tag(string $id, string $siteKey, array $options = [], string $size, string $theme, string $badge): string
+    private static function _getV2Tag(string $id, string $siteKey, array $options = [], string $size, string $theme, string $badge, bool $instantRender): string
     {
         $recaptchaCallbackName = StringHelper::camelCase($id);
         $tag = Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id]));
@@ -110,6 +111,7 @@ class GoogleRecaptchaVariable
                 });
                 ' . ($size == 'invisible' ? 'grecaptcha.execute(widgetId);' : '') . '
             };
+            ' . ($instantRender ? $recaptchaCallbackName . '();' : '') . '
         </script>
         <script src="https://www.google.com/recaptcha/api.js?onload=' . $recaptchaCallbackName . '&render=explicit&hl=' . Craft::$app->getSites()->getCurrentSite()->language . '" async defer></script>
         ';
