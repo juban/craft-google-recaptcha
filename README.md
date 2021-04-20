@@ -30,6 +30,9 @@ For example, to provide a container id, you can do:
 {{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }) }}
 ```
 
+> For API v2, you can provide a second boolean argument to the render method to trigger the instant rendering of the widget (ie. ```twig {{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}```).  
+> This is useful if you are working with views loaded through Ajax or Sprig calls and you need to refresh the widget.
+
 ### Verify users submissions
 
 To validate a user submission on server side, you can use the built-in method:
