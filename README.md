@@ -11,7 +11,7 @@ This plugin requires Craft CMS 3.2.0 or later and PHP 7.2.5 or later.
 1. Install with composer from your project directory : 
    * Tell composer where to find the repository : `composer config repositories.simplonprod/craft-google-recaptcha vcs https://gitlab+deploy-token-15:ZNH8tGxoPhwHyjxARj2u@gitlab.ecedi.fr/simplonprod/devops/craft-cms-plugins/craft-google-recaptcha.git`
    * Install the package : `composer require simplonprod/craft-google-recaptcha`
-2. Install the plugin in the Craft Control Panel under Settings → Plugins, or from the command line via `./craft install/plugin google-recaptcha`.
+2. Install the plugin in the Craft Control Panel under Settings → Plugins, or from the command line via `./craft plugin/install google-recaptcha`.
 3. Select and configure the service under Settings → Google reCAPTCHA
 
 ## Using Google reCAPTCHA
