@@ -5,8 +5,7 @@ paths:
   data: tests/_data
   support: tests/_support
   envs: tests/_envs
-settings:
-  bootstrap: _bootstrap.php
+bootstrap: _bootstrap.php
 coverage:
   enabled: true
   include:
@@ -27,14 +26,14 @@ modules:
   config:
     \craft\test\Craft:
       configFile: 'tests/_craft/config/test.php'
-      entryUrl: 'https://test.craftcms.test/index.php'
+      entryUrl: 'https://googlerecaptcha.ddev.site/index.php'
       projectConfig: {}
       migrations: []
       plugins:
         google-recaptcha:
           class: '\simplonprod\googlerecaptcha\GoogleRecaptcha'
           handle: google-recaptcha
-      cleanup: true
+      cleanup: false
       transaction: true
       dbSetup: {clean: true, setupCraft: true}
       fullMock: false

@@ -1,8 +1,8 @@
 <?php
 /**
- * Google Recaptcha plugin for Craft CMS 3.x
+ * Newsletter plugin for Craft CMS 3.x
  *
- * Google Recaptcha for Craft CMS
+ * Craft CMS Newsletter plugin
  *
  * @link      https://www.simplonprod.co
  * @copyright Copyright (c) 2021 Simplon.Prod
@@ -10,34 +10,21 @@
 
 namespace simplonprod\googlerecaptchatests\unit;
 
-use Codeception\Test\Unit;
-use UnitTester;
 use Craft;
 use simplonprod\googlerecaptcha\GoogleRecaptcha;
+use UnitTester;
 
 /**
- * ExampleUnitTest
- *
- *
  * @author    Simplon.Prod
- * @package   GoogleRecaptcha
+ * @package   Google reCAPTCHA
  * @since     1.0.0
  */
-class ExampleUnitTest extends Unit
+class PluginUnitTest extends BaseUnitTest
 {
-    // Properties
-    // =========================================================================
-
     /**
      * @var UnitTester
      */
     protected $tester;
-
-    // Public methods
-    // =========================================================================
-
-    // Tests
-    // =========================================================================
 
     /**
      *
@@ -48,6 +35,15 @@ class ExampleUnitTest extends Unit
             GoogleRecaptcha::class,
             GoogleRecaptcha::$plugin
         );
+    }
+
+    /**
+     *
+     */
+    public function testPluginInstallation()
+    {
+        $this->assertNull(Craft::$app->getPlugins()->getPlugin(self::PLUGIN_HANDLE)->uninstall());
+        $this->assertNull(Craft::$app->getPlugins()->getPlugin(self::PLUGIN_HANDLE)->install());
     }
 
     /**

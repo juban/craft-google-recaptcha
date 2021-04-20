@@ -1,0 +1,16 @@
+{{ div|raw }}
+<script type="text/javascript">
+    var {{ callbackName }} = function() {
+        var widgetId = grecaptcha.render("{{ id }}", {
+            sitekey: "{{ siteKey }}",
+            size: "{{ size }}",
+            theme: "{{ theme }}",
+            badge: "{{ badge }}"
+        });
+        {% if size == 'invisible' %}grecaptcha.execute(widgetId);{% endif %}
+    };
+    {% if instantRender %}
+    {{ callbackName }}();
+    {% endif %}
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload={{ callbackName }}&render=explicit&hl={{ craft.app.sites.currentSite.language }}" async defer></script>

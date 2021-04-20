@@ -27,6 +27,7 @@ return [
     'Size'                                            => 'Taille',
     'Theme'                                           => 'Thème',
     'Badge'                                           => 'Badge',
+    'Select the reCAPTCHA version.'                   => 'Sélectionnez la version de reCAPTCHA.',
     'Enter the reCAPTCHA site key here.'              => 'Saisissez la clé du site reCAPTCHA ici.',
     'Enter the reCAPTCHA secret key here.'            => 'Saisissez la clé secrète reCAPTCHA ici.',
     'Select the size of the reCAPTCHA widget.'        => 'Sélectionnez la taille du widget reCAPTCHA.',

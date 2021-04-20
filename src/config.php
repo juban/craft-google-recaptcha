@@ -23,8 +23,11 @@
  */
 
 return [
-
-    // This controls blah blah blah
-    "someAttribute" => true,
+    "version"   => 2,
+    "siteKey"   => '',
+    "secretKey" => '',
+    "size"      => 'normal',
+    "theme"     => 'light',
+    "badge"     => 'bottomright'
 
 ];

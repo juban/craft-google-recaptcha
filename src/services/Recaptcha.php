@@ -55,11 +55,11 @@ class Recaptcha extends Component
 
         $client = $this->getRecaptchaClient();
         $settings = GoogleRecaptcha::$plugin->getSettings();
-        $params = array(
+        $params = [
             'secret' =>  Craft::parseEnv($settings->secretKey),
             'response' => $recaptchaResponse,
             'remoteip' => $request->getUserIP(),
-        );
+        ];
         try {
             Craft::debug("Checking reCAPTCHA response", __METHOD__);
             $response = $client->request( 'POST', 'siteverify', [
@@ -83,6 +83,7 @@ class Recaptcha extends Component
 
     /**
      * @return Client
+     * @codeCoverageIgnore
      */
     public function getRecaptchaClient(): Client
     {

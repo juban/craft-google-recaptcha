@@ -15,6 +15,7 @@ use craft\helpers\ArrayHelper;
 use craft\helpers\Html;
 use craft\helpers\StringHelper;
 use craft\helpers\Template;
+use craft\web\View;
 use simplonprod\googlerecaptcha\GoogleRecaptcha;
 use Twig\Markup;
 
@@ -70,20 +71,11 @@ class GoogleRecaptchaVariable
      */
     private static function _getV3Tag(string $id, string $siteKey, array $options = []): string
     {
-        $tag = Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id]));
-        $tag .= '
-        <script src="https://www.google.com/recaptcha/api.js?render=' . $siteKey . '"></script>
-        <script>
-            grecaptcha.ready(function() {
-                grecaptcha.execute("' . $siteKey . '", {
-                    action: "homepage"
-                }).then(function(token) {
-                    document.getElementById("' . $id . '").value = token;
-                });
-            });
-        </script>
-        ';
-        return $tag;
+        return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
+            'id' => $id,
+            'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id])),
+            'siteKey' => $siteKey,
+        ], View::TEMPLATE_MODE_CP);
     }
 
     /**
@@ -98,23 +90,15 @@ class GoogleRecaptchaVariable
      */
     private static function _getV2Tag(string $id, string $siteKey, array $options = [], string $size, string $theme, string $badge, bool $instantRender): string
     {
-        $recaptchaCallbackName = StringHelper::camelCase($id);
-        $tag = Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id]));
-        $tag .= '
-        <script type="text/javascript">
-            var ' . $recaptchaCallbackName . ' = function() {
-                var widgetId = grecaptcha.render("' . $id . '", {
-                    sitekey : "' . $siteKey . '",
-                    size : "' . $size . '",
-                    theme : "' . $theme . '",
-                    badge: "' . $badge . '"
-                });
-                ' . ($size == 'invisible' ? 'grecaptcha.execute(widgetId);' : '') . '
-            };
-            ' . ($instantRender ? $recaptchaCallbackName . '();' : '') . '
-        </script>
-        <script src="https://www.google.com/recaptcha/api.js?onload=' . $recaptchaCallbackName . '&render=explicit&hl=' . Craft::$app->getSites()->getCurrentSite()->language . '" async defer></script>
-        ';
-        return $tag;
+        return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v2', [
+            'callbackName' => StringHelper::camelCase($id),
+            'id' => $id,
+            'div' => Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id])),
+            'siteKey' => $siteKey,
+            'size' => $size,
+            'theme' => $theme,
+            'badge' => $badge,
+            'instantRender' => $instantRender
+        ], View::TEMPLATE_MODE_CP);
     }
 }

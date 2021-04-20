@@ -21,10 +21,7 @@
     id: 'version',
     name: 'version',
     value: settings.version,
-    options: {
-        3: 'v3',
-        2: 'v2',
-    },
+    options: settings.getVersionOptions(),
     errors: settings.getErrors('version'),
     toggle: true,
 }) }}
@@ -60,11 +57,7 @@
         id: 'size',
         name: 'size',
         value: settings.size,
-        options: {
-            'normal': 'Normal'|t('google-recaptcha'),
-            'compact': 'Compact'|t('google-recaptcha'),
-            'invisible': 'Invisible'|t('google-recaptcha'),
-        },
+        options: settings.getSizeOptions(),
         errors: settings.getErrors('size')
     }) }}
 
@@ -74,10 +67,7 @@
         id: 'theme',
         name: 'theme',
         value: settings.theme,
-        options: {
-            'light': 'Light'|t('google-recaptcha'),
-            'dark': 'Dark'|t('google-recaptcha'),
-        },
+        options: settings.getThemeOptions(),
         errors: settings.getErrors('theme')
     }) }}
 
@@ -87,11 +77,7 @@
         id: 'badge',
         name: 'badge',
         value: settings.badge,
-        options: {
-            'bottomright': 'Bottom right'|t('google-recaptcha'),
-            'bottomleft': 'Bottom left'|t('google-recaptcha'),
-            'inline': 'Inline'|t('google-recaptcha'),
-        },
+        options: settings.getBadgeOptions(),
         errors: settings.getErrors('badge')
     }) }}
 

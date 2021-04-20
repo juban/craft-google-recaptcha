@@ -1,0 +1,11 @@
+{{ hiddenInput|raw }}
+<script src="https://www.google.com/recaptcha/api.js?render={{ siteKey }}"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute("{{ siteKey }}", {
+            action: "homepage"
+        }).then(function(token) {
+            document.getElementById("{{ id }}").value = token;
+        });
+    });
+</script>

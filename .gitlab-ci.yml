@@ -26,31 +26,31 @@ build:
   only:
     - master
 
-#test:
-#  stage: test
-#  image: $CI_REGISTRY/simplonprod/devops/docker-images/php/7.4-xdebug
-#  services:
-#    - mysql:5.6
-#  variables:
-#    # Configure mysql environment variables (https://hub.docker.com/_/mysql/)
-#    MYSQL_DATABASE: "db"
-#    MYSQL_USER: "db"
-#    MYSQL_PASSWORD: "db"
-#    MYSQL_ROOT_PASSWORD: "db"
-#  before_script:
-#    - cp tests/example-env tests/.env
-#  script:
-#    - ./vendor/bin/codecept run --no-colors --steps --xml --html --coverage --coverage-xml --coverage-html
-#  artifacts:
-#    paths:
-#      - tests/_output/report.xml
-#      - tests/_output/report.html
-#      - tests/_output/coverage.xml
-#      - tests/_output/coverage
-#    reports:
-#      junit: tests/_output/report.xml
-#  only:
-#    - master
+test:
+  stage: test
+  image: $CI_REGISTRY/simplonprod/devops/docker-images/php/7.4-xdebug
+  services:
+    - mysql:5.6
+  variables:
+    # Configure mysql environment variables (https://hub.docker.com/_/mysql/)
+    MYSQL_DATABASE: "db"
+    MYSQL_USER: "db"
+    MYSQL_PASSWORD: "db"
+    MYSQL_ROOT_PASSWORD: "db"
+  before_script:
+    - cp tests/example-env tests/.env
+  script:
+    - ./vendor/bin/codecept run --no-colors --steps --xml --html --coverage --coverage-xml --coverage-html
+  artifacts:
+    paths:
+      - tests/_output/report.xml
+      - tests/_output/report.html
+      - tests/_output/coverage.xml
+      - tests/_output/coverage
+    reports:
+      junit: tests/_output/report.xml
+  only:
+    - master
 
 sonarqube_issues:
   image: ciricihq/gitlab-sonar-scanner
@@ -72,19 +72,19 @@ deploy:
   only:
     - tags
 
-#pages:
-#  image: alpine:latest
-#  stage: deploy
-#  script:
-#    - mkdir .public
-#    - cp -r tests/_output/coverage .public/coverage
-#    - cp tests/_output/report.html .public/index.html
-#    - mv .public public
-#  artifacts:
-#    paths:
-#      - public
-#  only:
-#    - master
+pages:
+  image: alpine:latest
+  stage: deploy
+  script:
+    - mkdir .public
+    - cp -r tests/_output/coverage .public/coverage
+    - cp tests/_output/report.html .public/index.html
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
 
 sonarqube_publish:
   image: ciricihq/gitlab-sonar-scanner
