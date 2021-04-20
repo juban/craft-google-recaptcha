@@ -143,13 +143,11 @@ class GoogleRecaptcha extends Plugin
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
             function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                    if ($event->plugin === $this && Craft::$app->getRequest()->getIsCpRequest()) {
-                        // Redirect to settings page
-                        Craft::$app->getResponse()->redirect(
-                            UrlHelper::cpUrl('settings/plugins/google-recaptcha')
-                        )->send();
-                    }
+                if ($event->plugin === $this && Craft::$app->getRequest()->getIsCpRequest()) {
+                    // Redirect to settings page
+                    Craft::$app->getResponse()->redirect(
+                        UrlHelper::cpUrl('settings/plugins/google-recaptcha')
+                    )->send();
                 }
             }
         );
