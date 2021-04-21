@@ -87,11 +87,10 @@ class Recaptcha extends Component
      */
     public function getRecaptchaClient(): Client
     {
-        $client = new Client([
+        return new Client([
             'base_uri' => 'https://www.google.com/recaptcha/api/',
             'timeout' => 5,
             'connect_timeout' => 5,
         ]);
-        return $client;
     }
 }
