@@ -48,7 +48,7 @@ class GoogleRecaptchaVariable
      * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      */
-    public function render(array $options = [], bool $instantRender = false)
+    public function render(array $options = [], bool $instantRender = false): Markup
     {
         $recaptchaTag = '';
         $settings = GoogleRecaptcha::$plugin->getSettings();
