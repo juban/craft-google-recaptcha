@@ -129,15 +129,21 @@ class GoogleRecaptcha extends Plugin
      */
     protected function settingsHtml(): string
     {
+        $configService = Craft::$app->getConfig();
+        $config = $configService->getConfigFromFile('google-recaptcha');
+        if (!empty($config)) {
+            $configPath = $configService->getConfigFilePath('google-recaptcha');
+        }
         return Craft::$app->view->renderTemplate(
             'google-recaptcha/settings',
             [
-                'settings' => $this->getSettings()
+                'settings'   => $this->getSettings(),
+                'configPath' => $configPath ?? null
             ]
         );
     }
 
-    private function _registerAfterInstall(): void
+    private function _registerAfterInstall()
     {
         Event::on(
             Plugins::class,
@@ -153,7 +159,7 @@ class GoogleRecaptcha extends Plugin
         );
     }
 
-    private function _registerTwigVariables(): void
+    private function _registerTwigVariables()
     {
         Event::on(
             CraftVariable::class,
