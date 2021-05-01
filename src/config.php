@@ -29,5 +29,4 @@ return [
     "size"      => 'normal',
     "theme"     => 'light',
     "badge"     => 'bottomright'
-
 ];
