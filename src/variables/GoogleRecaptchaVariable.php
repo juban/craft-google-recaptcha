@@ -43,7 +43,10 @@ class GoogleRecaptchaVariable
      * @param array $options
      * @param bool $instantRender
      * @return Markup
-     * @throws \craft\errors\SiteNotFoundException
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \yii\base\Exception
      */
     public function render(array $options = [], bool $instantRender = false)
     {
@@ -68,8 +71,12 @@ class GoogleRecaptchaVariable
      * @param string $siteKey
      * @param array $options
      * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \yii\base\Exception
      */
-    private static function _getV3Tag(string $id, string $siteKey, array $options = []): string
+    private static function _getV3Tag(string $id, string $siteKey, array $options): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
             'id' => $id,
@@ -85,10 +92,14 @@ class GoogleRecaptchaVariable
      * @param string $size
      * @param string $theme
      * @param string $badge
+     * @param bool $instantRender
      * @return string
-     * @throws \craft\errors\SiteNotFoundException
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \yii\base\Exception
      */
-    private static function _getV2Tag(string $id, string $siteKey, array $options = [], string $size, string $theme, string $badge, bool $instantRender): string
+    private static function _getV2Tag(string $id, string $siteKey, array $options, string $size, string $theme, string $badge, bool $instantRender): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v2', [
             'callbackName' => StringHelper::camelCase($id),
