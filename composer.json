@@ -2,7 +2,7 @@
     "name": "simplonprod/craft-google-recaptcha",
     "description": "Google reCAPTCHA for Craft CMS",
     "type": "craft-plugin",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "keywords": [
         "craft",
         "cms",
@@ -11,8 +11,8 @@
         "google recaptcha"
     ],
     "support": {
-        "docs": "https://github.com/juban/google-recaptcha/blob/master/README.md",
-        "issues": "https://github.com/juban/google-recaptcha/issues"
+        "docs": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
+        "issues": "https://github.com/Simplon-Prod/craft-google-recaptcha/issues"
     },
     "license": "MIT",
     "authors": [
@@ -39,8 +39,8 @@
         "handle": "google-recaptcha",
         "developer": "Simplon.Prod",
         "developerUrl": "https://www.simplonprod.co",
-        "documentationUrl": "https://github.com/juban/google-recaptcha/blob/master/README.md",
-        "changelogUrl": "https://raw.githubusercontent.com/juban/google-recaptcha/master/CHANGELOG.md",
+        "documentationUrl": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/Simplon-Prod/craft-google-recaptcha/master/CHANGELOG.md",
         "components": {
             "recaptcha": "simplonprod\\googlerecaptcha\\services\\Recaptcha"
         },
