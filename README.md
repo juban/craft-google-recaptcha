@@ -30,7 +30,7 @@ You can create a `google-recaptcha.php` file in the `config` folder of your proj
 
 ```php
 return [
-    "version"   => 2, // Either 2 our 3
+    "version"   => 2, // Either 2 or 3
     "siteKey"   => '', // Site key
     "secretKey" => '', // Secret key
     "size"      => 'normal', // normal, compact or invisible
