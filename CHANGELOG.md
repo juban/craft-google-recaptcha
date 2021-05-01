@@ -5,6 +5,8 @@
 - Update docs, issues and changelog links in composer.json
 - Upgrade codeception to v4
 - Fix composer dependencies
+- Settings view refinements
+- Various small refactoring
 
 ## 1.0.2 - 2021-04-20
 ### Added
