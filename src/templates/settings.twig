@@ -15,18 +15,8 @@
 
 {% import "_includes/forms" as forms %}
 
-{{ forms.selectField({
-    label: "API Version"|t('google-recaptcha'),
-    instructions: "Select the reCAPTCHA version."|t('google-recaptcha'),
-    id: 'version',
-    name: 'version',
-    value: settings.version,
-    options: settings.getVersionOptions(),
-    errors: settings.getErrors('version'),
-    toggle: true,
-}) }}
-
 {{ forms.autosuggestField({
+    first: true,
     label: "Site Key"|t('google-recaptcha'),
     instructions: "Enter the reCAPTCHA site key here."|t('google-recaptcha'),
     id: 'siteKey',
@@ -37,7 +27,6 @@
     errors: settings.getErrors('siteKey')
 }) }}
 
-
 {{ forms.autosuggestField({
     label: "Secret Key"|t('google-recaptcha'),
     instructions: "Enter the reCAPTCHA secret key here."|t('google-recaptcha'),
@@ -47,6 +36,17 @@
     suggestEnvVars: true,
     value: settings.secretKey,
     errors: settings.getErrors('secretKey')
+}) }}
+
+{{ forms.selectField({
+    label: "API Version"|t('google-recaptcha'),
+    instructions: "Select the reCAPTCHA version."|t('google-recaptcha'),
+    id: 'version',
+    name: 'version',
+    value: settings.version,
+    options: settings.getVersionOptions(),
+    errors: settings.getErrors('version'),
+    toggle: true,
 }) }}
 
 <div id="2" {{ settings.version == 3 ? 'class="hidden"' }}>
