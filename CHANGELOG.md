@@ -1,5 +1,9 @@
 # Google Recaptcha Changelog
 
+## 1.0.3 - 2021-05-01
+### Changed
+- Update docs, issues and changelog links in composer.json
+
 ## 1.0.2 - 2021-04-20
 ### Added
 - Full unit and functional tests coverage
