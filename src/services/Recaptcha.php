@@ -38,14 +38,7 @@ class Recaptcha extends Component
     // Public Methods
     // =========================================================================
 
-    /**
-     * Verify the posted recaptcha token against Google reCAPTCHA API
-     *
-     *     GoogleRecaptcha::$plugin->recaptcha->verify()
-     *
-     * @return mixed
-     */
-    public function verify()
+    public function verify(): bool
     {
         $request = Craft::$app->getRequest();
         $recaptchaResponse = $request->getParam('g-recaptcha-response');
