@@ -4,7 +4,7 @@ Google reCAPTCHA for Craft CMS enable to render and validate the reCAPTCHA widge
 
 ## Requirements
 
-This plugin requires Craft CMS 3.2.0 or later and PHP 7.2.5 or later.
+This plugin requires Craft CMS 3.2.0 or later and PHP 7.0.0 or later.
 
 ## Installation
 
@@ -30,7 +30,7 @@ For example, to provide a container id, you can do:
 {{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }) }}
 ```
 
-> For API v2, you can provide a second boolean argument to the render method to trigger the instant rendering of the widget (ie. `{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}`).  
+> 💡 For API v2, you can provide a second boolean argument to the render method to trigger the instant rendering of the widget (ie. `{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}`).  
 > This is useful if you are working with views loaded through Ajax or Sprig calls and you need to refresh the widget.
 
 ### Verify users submissions
