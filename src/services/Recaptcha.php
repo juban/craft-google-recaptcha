@@ -30,6 +30,8 @@ use yii\web\ForbiddenHttpException;
  * @author    Simplon.Prod
  * @package   GoogleRecaptcha
  * @since     1.0.0
+ *
+ * @property-read \GuzzleHttp\Client $recaptchaClient
  */
 class Recaptcha extends Component
 {
