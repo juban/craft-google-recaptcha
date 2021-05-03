@@ -1,5 +1,7 @@
 # Google reCAPTCHA plugin for Craft CMS 3
 
+![](logo.png)
+
 Google reCAPTCHA for Craft CMS enables to render and validate the reCAPTCHA widget. It is compatible with both API v2 and v3, including checkbox badge and invisible flavors.
 
 ## Requirements
@@ -30,7 +32,7 @@ You can create a `google-recaptcha.php` file in the `config` folder of your proj
 
 ```php
 return [
-    "version"   => 2, // Either 2 or 3
+    "version"   => 2, // Either 2 our 3
     "siteKey"   => '', // Site key
     "secretKey" => '', // Secret key
     "size"      => 'normal', // normal, compact or invisible
@@ -103,7 +105,22 @@ Event::on(SaveController::class, SaveController::EVENT_BEFORE_SAVE_ENTRY, functi
 });
 ```
 
+### Verify Contact Form submissions
 
+In order to add a reCAPTCHA verification when working with [Contact Form](https://plugins.craftcms.com/contact-form), you can do something like the following in a project module:
+
+```php
+Event::on(Submission::class, Submission::EVENT_AFTER_VALIDATE, function(Event $e) {
+    /** @var Submission $submission */
+    $submission = $e->sender;
+    // Check reCAPTCHA
+    $isValid = GoogleRecaptcha::$plugin->recaptcha->verify();
+    if (!$isValid) {
+        $submission->addError('recaptcha', 'Please, prove you’re not a robot.');
+    }
+});
+
+```
 
 ---
 

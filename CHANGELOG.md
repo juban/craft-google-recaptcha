@@ -1,5 +1,12 @@
 # Google Recaptcha Changelog
 
+## 1.0.4 - 2021-05-03
+### Added
+- Contact form instructions in README
+
+### Changed
+- Updated plugin icon
+
 ## 1.0.3 - 2021-05-01
 ### Changed
 - Update docs, issues and changelog links in composer.json
