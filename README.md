@@ -24,7 +24,8 @@ You can manage configuration setting through the Control Panel by going to Setti
 
 * Provide the Site Key and the Secret Key obtained from [your reCAPTCHA account](https://www.google.com/recaptcha/admin).
 * Select the API version accordingly to the reCAPTCHA type you created the keys upon.
-* For v2 API, select desired look and feel for Theme, Size and Badge parameters.
+* For v2 API: select desired look and feel for Theme, Size and Badge parameters.
+* For v3 API: optionally (but recommended) specify the minimum score the user will have to obtain in order to validate the reCATPTCHA challenge (see here for help on interpreting the score)
 
 ### Configuration file
 
@@ -32,12 +33,13 @@ You can create a `google-recaptcha.php` file in the `config` folder of your proj
 
 ```php
 return [
-    "version"   => 2, // Either 2 our 3
-    "siteKey"   => '', // Site key
-    "secretKey" => '', // Secret key
-    "size"      => 'normal', // normal, compact or invisible
-    "theme"     => 'light', // light or dark
-    "badge"     => 'bottomright' // bottomright, bottomleft or inline
+    "version"   		=> 2, // Either 2 our 3
+    "siteKey"   		=> '', // Site key
+    "secretKey" 		=> '', // Secret key
+    "size"      		=> 'normal', // normal, compact or invisible
+    "theme"     		=> 'light', // light or dark
+    "badge"     		=> 'bottomright' // bottomright, bottomleft or inline
+    "scoreThreshold"	=> 0.5 // Value between 0 and 1 to determine the minimum score to validate reCAPTCHA v3
 ];
 ```
 

@@ -21,26 +21,26 @@
  * @since     1.0.0
  */
 return [
-    'API Version'                                     => 'Version d’API',
-    'Site Key'                                        => 'Clé du site',
-    'Secret Key'                                      => 'Clé secrète',
-    'Size'                                            => 'Taille',
-    'Theme'                                           => 'Thème',
-    'Badge'                                           => 'Badge',
-    'Select the reCAPTCHA version.'                   => 'Sélectionnez la version de reCAPTCHA.',
-    'Enter the reCAPTCHA site key here.'              => 'Saisissez la clé du site reCAPTCHA ici.',
-    'Enter the reCAPTCHA secret key here.'            => 'Saisissez la clé secrète reCAPTCHA ici.',
-    'Select the size of the reCAPTCHA widget.'        => 'Sélectionnez la taille du widget reCAPTCHA.',
-    'Select the color theme of the reCAPTCHA widget.' => 'Sélectionnez le thème de couleur du widget reCAPTCHA.',
-    'Select the position of the reCAPTCHA badge.'     => 'Sélectionnez l’emplacement du widget reCAPTCHA.',
-    'Normal'                                          => 'Normal',
-    'Compact'                                         => 'Compact',
-    'Invisible'                                       => 'Invisible',
-    'Light'                                           => 'Clair',
-    'Dark'                                            => 'Foncé',
-    'Bottom right'                                    => 'En bas à droite',
-    'Bottom left'                                     => 'En bas à gauche',
-    'Inline'                                          => 'En ligne'
-
-
+    'API Version'                                                                                                                                => 'Version d’API',
+    'Site Key'                                                                                                                                   => 'Clé du site',
+    'Secret Key'                                                                                                                                 => 'Clé secrète',
+    'Size'                                                                                                                                       => 'Taille',
+    'Theme'                                                                                                                                      => 'Thème',
+    'Badge'                                                                                                                                      => 'Badge',
+    'Select the reCAPTCHA version.'                                                                                                              => 'Sélectionnez la version de reCAPTCHA.',
+    'Enter the reCAPTCHA site key here.'                                                                                                         => 'Saisissez la clé du site reCAPTCHA ici.',
+    'Enter the reCAPTCHA secret key here.'                                                                                                       => 'Saisissez la clé secrète reCAPTCHA ici.',
+    'Select the size of the reCAPTCHA widget.'                                                                                                   => 'Sélectionnez la taille du widget reCAPTCHA.',
+    'Select the color theme of the reCAPTCHA widget.'                                                                                            => 'Sélectionnez le thème de couleur du widget reCAPTCHA.',
+    'Select the position of the reCAPTCHA badge.'                                                                                                => 'Sélectionnez l’emplacement du widget reCAPTCHA.',
+    'Normal'                                                                                                                                     => 'Normal',
+    'Compact'                                                                                                                                    => 'Compact',
+    'Invisible'                                                                                                                                  => 'Invisible',
+    'Light'                                                                                                                                      => 'Clair',
+    'Dark'                                                                                                                                       => 'Foncé',
+    'Bottom right'                                                                                                                               => 'En bas à droite',
+    'Bottom left'                                                                                                                                => 'En bas à gauche',
+    'Inline'                                                                                                                                     => 'En ligne',
+    'Score threshold'                                                                                                                            => 'Seuil de score',
+    'Minimum score between 0 and 1 to obtain in order for the end user to validate the reCAPTHCHA challenge. Leave blank for no score checking.' => 'Score minimum entre 0 et 1 à obtenir pour que l’utilisateur final valide le challenge reCAPTHCHA. Laissez vide pour ne pas vérifier le score.'
 ];

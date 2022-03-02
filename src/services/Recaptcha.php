@@ -17,6 +17,7 @@ use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use simplonprod\googlerecaptcha\GoogleRecaptcha;
+use yii\helpers\VarDumper;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -48,13 +49,13 @@ class Recaptcha extends Component
         $client = $this->getRecaptchaClient();
         $settings = GoogleRecaptcha::$plugin->getSettings();
         $params = [
-            'secret' =>  App::parseEnv($settings->secretKey),
+            'secret'   => App::parseEnv($settings->secretKey),
             'response' => $recaptchaResponse,
             'remoteip' => $request->getUserIP(),
         ];
         try {
             Craft::debug("Checking reCAPTCHA response", __METHOD__);
-            $response = $client->request( 'POST', 'siteverify', [
+            $response = $client->request('POST', 'siteverify', [
                 'form_params' => $params
             ]);
             if ($response->getStatusCode() == 200) {
@@ -65,8 +66,14 @@ class Recaptcha extends Component
             return false;
         }
 
+        //die(VarDumper::dumpAsString($result));
         if (empty($result['success']) || (!empty($result['action']) && $result['action'] != "homepage")) {
-            Craft::warning("reCAPTCHA check failed", __METHOD__);
+            Craft::warning("reCAPTCHA check failed: " . VarDumper::dumpAsString($result), __METHOD__);
+            return false;
+        }
+        // Check for score if v3
+        if ((int)App::parseEnv($settings->version) === 3 && isset($result['score']) && (double)$result['score'] < (double)$settings->scoreThreshold) {
+            Craft::warning("reCAPTCHA score checking failed: " . $result['score'], __METHOD__);
             return false;
         }
 
@@ -80,8 +87,8 @@ class Recaptcha extends Component
     public function getRecaptchaClient(): Client
     {
         return new Client([
-            'base_uri' => 'https://www.google.com/recaptcha/api/',
-            'timeout' => 5,
+            'base_uri'        => 'https://www.google.com/recaptcha/api/',
+            'timeout'         => 5,
             'connect_timeout' => 5,
         ]);
     }

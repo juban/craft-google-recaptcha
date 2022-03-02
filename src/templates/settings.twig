@@ -103,3 +103,17 @@
     }) }}
 
 </div>
+
+<div id="3" {{ settings.version == 2 ? 'class="hidden"' }}>
+
+    {{ forms.autosuggestField({
+        label: "Score threshold"|t('google-recaptcha'),
+        instructions: "Minimum score between 0 and 1 to obtain in order for the end user to validate the reCAPTHCHA challenge. Leave blank for no score checking."|t('google-recaptcha'),
+        id: 'scoreThreshold',
+        name: 'scoreThreshold',
+        value: settings.scoreThreshold,
+        suggestEnvVars: true,
+        errors: settings.getErrors('scoreThreshold')
+    }) }}
+
+</div>

@@ -91,6 +91,46 @@ class ServicesTest extends BaseUnitTest
         $this->assertFalse($googleRecaptchaService->verify());
     }
 
+    public function testSuccessfulVerifyWithScore(): void
+    {
+        GoogleRecaptcha::$plugin->setSettings([
+            'version'        => 3,
+            'scoreThreshold' => 0.5
+        ]);
+        $response = $this->make(Response::class,
+            [
+                'getStatusCode' => 200,
+                'getBody'       => Utils::streamFor(Json::encode([
+                    'success' => true,
+                    'score' => 0.9
+                ]))
+            ]);
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $this->_getClientMock($response)
+        ]);
+        $this->assertTrue($googleRecaptchaService->verify());
+    }
+
+    public function testFailedVerifyWithScore(): void
+    {
+        GoogleRecaptcha::$plugin->setSettings([
+            'version'        => 3,
+            'scoreThreshold' => 0.9
+        ]);
+        $response = $this->make(Response::class,
+            [
+                'getStatusCode' => 200,
+                'getBody'       => Utils::streamFor(Json::encode([
+                    'success' => true,
+                    'score' => 0.5
+                ]))
+            ]);
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $this->_getClientMock($response)
+        ]);
+        $this->assertFalse($googleRecaptchaService->verify());
+    }
+
     public function testVerifyWithConnectException(): void
     {
         $response = $this->make(Response::class,
