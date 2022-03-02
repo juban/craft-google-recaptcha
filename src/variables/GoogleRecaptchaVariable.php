@@ -11,6 +11,7 @@
 namespace simplonprod\googlerecaptcha\variables;
 
 use Craft;
+use craft\helpers\App;
 use craft\helpers\ArrayHelper;
 use craft\helpers\Html;
 use craft\helpers\StringHelper;
@@ -56,11 +57,11 @@ class GoogleRecaptchaVariable
         $id = $options['id'] ?? 'recaptcha-' . StringHelper::randomString(6);
         ArrayHelper::remove($options, 'id');
 
-        $siteKey = Craft::parseEnv($settings->siteKey);
-        if ((int)$settings->version === 3) {
+        $siteKey = App::parseEnv($settings->siteKey);
+        if ((int)App::parseEnv($settings->version) === 3) {
             $recaptchaTag = self::_getV3Tag($id, $siteKey, $options);
         } else {
-            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, $settings->size, $settings->theme, $settings->badge, $instantRender);
+            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender);
         }
 
         return Template::raw($recaptchaTag);

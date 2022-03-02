@@ -33,7 +33,7 @@ class CpCest
     }
 
     // tests
-    public function tryToShowControlPannel(FunctionalTester $I)
+    public function tryToShowControlPanel(FunctionalTester $I)
     {
         Craft::$app->language = 'fr-FR';
         $I->amOnPage('/' . $this->cpTrigger . '/settings/plugins/google-recaptcha');
@@ -43,7 +43,7 @@ class CpCest
         $I->see('Clé secrète');
     }
 
-    public function tryToSaveSettingFromControlPannel(FunctionalTester $I)
+    public function tryToSaveSettingFromControlPanel(FunctionalTester $I)
     {
         $I->amOnPage('/' . $this->cpTrigger . '/settings/plugins/google-recaptcha');
         $I->submitForm('#main-form', [

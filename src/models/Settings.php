@@ -39,6 +39,7 @@ class Settings extends Model
     public $size;
     public $theme;
     public $badge;
+    public $scoreThreshold;
 
     public function behaviors()
     {
@@ -47,7 +48,12 @@ class Settings extends Model
             'class'      => EnvAttributeParserBehavior::class,
             'attributes' => [
                 'siteKey',
-                'secretKey'
+                'secretKey',
+                'version',
+                'size',
+                'theme',
+                'badge',
+                'scoreThreshold'
             ],
         ];
         return $behaviors;
@@ -59,6 +65,7 @@ class Settings extends Model
     protected function defineRules(): array
     {
         $rules = parent::defineRules();
+        $rules[] = ['scoreThreshold', 'default', 'value' => null];
         $rules[] = [['version', 'siteKey', 'secretKey'], 'required'];
         $rules[] = [
             ['size', 'theme', 'badge'],
@@ -71,6 +78,7 @@ class Settings extends Model
         $rules[] = ['size', 'in', 'range' => array_keys(self::getSizeOptions()), 'skipOnEmpty' => true];
         $rules[] = ['theme', 'in', 'range' => array_keys(self::getThemeOptions()), 'skipOnEmpty' => true];
         $rules[] = ['badge', 'in', 'range' => array_keys(self::getBadgeOptions()), 'skipOnEmpty' => true];
+        $rules[] = ['scoreThreshold', 'double', 'min' => 0, 'max' => 1, 'skipOnEmpty' => true];
 
         return $rules;
     }

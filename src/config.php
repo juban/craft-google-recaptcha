@@ -23,10 +23,11 @@
  */
 
 return [
-    "version"   => 2,
-    "siteKey"   => '',
-    "secretKey" => '',
-    "size"      => 'normal',
-    "theme"     => 'light',
-    "badge"     => 'bottomright'
+    "version"        => 2,
+    "siteKey"        => '',
+    "secretKey"      => '',
+    "size"           => 'normal',
+    "theme"          => 'light',
+    "badge"          => 'bottomright',
+    "scoreThreshold" => null
 ];

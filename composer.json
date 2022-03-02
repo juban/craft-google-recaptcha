@@ -2,7 +2,7 @@
   "name": "simplonprod/craft-google-recaptcha",
   "description": "Google reCAPTCHA for Craft CMS",
   "type": "craft-plugin",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "keywords": [
     "craft",
     "cms",
@@ -22,8 +22,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
-    "craftcms/cms": "^3.2.0"
+    "php": ">=7.2.5",
+    "craftcms/cms": "^3.7.29"
   },
   "require-dev": {
     "codeception/codeception": "^4.0.0",
@@ -48,5 +48,11 @@
       "recaptcha": "simplonprod\\googlerecaptcha\\services\\Recaptcha"
     },
     "class": "simplonprod\\googlerecaptcha\\GoogleRecaptcha"
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
   }
 }

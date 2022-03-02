@@ -1,5 +1,13 @@
 # Google Recaptcha Changelog
 
+## 1.1.0 - 2022-03-02
+### Added
+- New score threshold configuration can be defined for Google reCAPTCHA v3
+
+### Changed
+- Google reCAPTCHA version and options can now be set using environment variables
+- Bump minimum required Craft version to 3.7.29
+
 ## 1.0.4 - 2021-05-03
 ### Added
 - Contact form instructions in README
