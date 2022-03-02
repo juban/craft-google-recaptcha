@@ -51,46 +51,54 @@
     errors: settings.getErrors('secretKey')
 }) }}
 
-{{ forms.selectField({
+{{ forms.selectizeField({
     label: "API Version"|t('google-recaptcha'),
     instructions: "Select the reCAPTCHA version."|t('google-recaptcha'),
     id: 'version',
     name: 'version',
     value: settings.version,
     options: settings.getVersionOptions(),
+    includeEnvVars: true,
+    allowedEnvValues: settings.getVersionOptions()|keys,
     errors: settings.getErrors('version'),
     toggle: true,
 }) }}
 
 <div id="2" {{ settings.version == 3 ? 'class="hidden"' }}>
 
-    {{ forms.selectField({
+    {{ forms.selectizeField({
         label: "Size"|t('google-recaptcha'),
         instructions: "Select the size of the reCAPTCHA widget."|t('google-recaptcha'),
         id: 'size',
         name: 'size',
         value: settings.size,
         options: settings.getSizeOptions(),
+        includeEnvVars: true,
+        allowedEnvValues: settings.getSizeOptions()|keys,
         errors: settings.getErrors('size')
     }) }}
 
-    {{ forms.selectField({
+    {{ forms.selectizeField({
         label: "Theme"|t('google-recaptcha'),
         instructions: "Select the color theme of the reCAPTCHA widget."|t('google-recaptcha'),
         id: 'theme',
         name: 'theme',
         value: settings.theme,
         options: settings.getThemeOptions(),
+        includeEnvVars: true,
+        allowedEnvValues: settings.getThemeOptions()|keys,
         errors: settings.getErrors('theme')
     }) }}
 
-    {{ forms.selectField({
+    {{ forms.selectizeField({
         label: "Badge"|t('google-recaptcha'),
         instructions: "Select the position of the reCAPTCHA badge."|t('google-recaptcha'),
         id: 'badge',
         name: 'badge',
         value: settings.badge,
         options: settings.getBadgeOptions(),
+        includeEnvVars: true,
+        allowedEnvValues: settings.getBadgeOptions()|keys,
         errors: settings.getErrors('badge')
     }) }}
 

@@ -47,7 +47,11 @@ class Settings extends Model
             'class'      => EnvAttributeParserBehavior::class,
             'attributes' => [
                 'siteKey',
-                'secretKey'
+                'secretKey',
+                'version',
+                'size',
+                'theme',
+                'badge'
             ],
         ];
         return $behaviors;

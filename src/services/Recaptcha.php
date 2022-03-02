@@ -12,6 +12,7 @@ namespace simplonprod\googlerecaptcha\services;
 
 use Craft;
 use craft\base\Component;
+use craft\helpers\App;
 use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
@@ -20,10 +21,6 @@ use yii\web\ForbiddenHttpException;
 
 /**
  * Recaptcha Service
- *
- * All of your plugin’s business logic should go in services, including saving data,
- * retrieving data, etc. They provide APIs that your controllers, template variables,
- * and other plugins can interact with.
  *
  * https://craftcms.com/docs/plugins/services
  *
@@ -51,7 +48,7 @@ class Recaptcha extends Component
         $client = $this->getRecaptchaClient();
         $settings = GoogleRecaptcha::$plugin->getSettings();
         $params = [
-            'secret' =>  Craft::parseEnv($settings->secretKey),
+            'secret' =>  App::parseEnv($settings->secretKey),
             'response' => $recaptchaResponse,
             'remoteip' => $request->getUserIP(),
         ];

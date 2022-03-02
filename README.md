@@ -6,7 +6,7 @@ Google reCAPTCHA for Craft CMS enables to render and validate the reCAPTCHA widg
 
 ## Requirements
 
-This plugin requires Craft CMS 3.2.0 or later and PHP 7.0.0 or later.
+This plugin requires Craft CMS 3.7.29 or later and PHP 7.2.5 or later.
 
 To use the plugin, you will need to get an API site key and secret key which you can configure [here](https://www.google.com/recaptcha/admin).
 

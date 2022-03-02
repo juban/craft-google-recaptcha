@@ -20,6 +20,7 @@ coverage:
     - templates/*
     - tests/*
     - vendor/*
+    - src/config.php
 params:
   - tests/.env
 modules:

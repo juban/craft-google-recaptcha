@@ -15,6 +15,7 @@ use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\RequestInterface;
 use simplonprod\googlerecaptcha\GoogleRecaptcha;
@@ -47,10 +48,10 @@ class ServicesTest extends BaseUnitTest
         $response = $this->make(Response::class,
             [
                 'getStatusCode' => 200,
-                'getBody'       => Json::encode([
+                'getBody'       => Utils::streamFor(Json::encode([
                     'success' => true,
                     'action'  => 'homepage'
-                ])
+                ]))
             ]);
         $googleRecaptchaService = $this->make(Recaptcha::class, [
             'getRecaptchaClient' => $this->_getClientMock($response)
@@ -58,14 +59,31 @@ class ServicesTest extends BaseUnitTest
         $this->assertTrue($googleRecaptchaService->verify());
     }
 
+    private function _getClientMock(MockObject $response)
+    {
+        $clientMock = $this->createMock(Client::class);
+        $clientMock
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', 'siteverify', [
+                'form_params' => [
+                    'secret'   => 'some-secret-key',
+                    'response' => Craft::$app->request->getBodyParam('g-recaptcha-response'),
+                    'remoteip' => Craft::$app->request->getUserIP()
+                ]
+            ])
+            ->willReturn($response);
+        return $clientMock;
+    }
+
     public function testFailedVerify(): void
     {
         $response = $this->make(Response::class,
             [
                 'getStatusCode' => 200,
-                'getBody'       => Json::encode([
+                'getBody'       => Utils::streamFor(Json::encode([
                     'success' => false
-                ])
+                ]))
             ]);
         $googleRecaptchaService = $this->make(Recaptcha::class, [
             'getRecaptchaClient' => $this->_getClientMock($response)
@@ -98,22 +116,5 @@ class ServicesTest extends BaseUnitTest
         Craft::$app->request->setBodyParams([]);
         $this->expectException(ForbiddenHttpException::class);
         GoogleRecaptcha::$plugin->recaptcha->verify();
-    }
-
-    private function _getClientMock(MockObject $response)
-    {
-        $clientMock = $this->createMock(Client::class);
-        $clientMock
-            ->expects($this->once())
-            ->method('request')
-            ->with('POST', 'siteverify', [
-                'form_params' => [
-                    'secret'   => 'some-secret-key',
-                    'response' => Craft::$app->request->getBodyParam('g-recaptcha-response'),
-                    'remoteip' => Craft::$app->request->getUserIP()
-                ]
-            ])
-            ->willReturn($response);
-        return $clientMock;
     }
 }
