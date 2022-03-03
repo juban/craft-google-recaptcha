@@ -44,6 +44,9 @@ class Recaptcha extends Component
             throw new ForbiddenHttpException('Invalid reCAPTCHA response');
         }
 
+        // Validate posted action (if any)
+        $recaptchaAction = Craft::$app->getSecurity()->validateData($request->getBodyParam('g-recaptcha-action'));
+
         $result = '';
 
         $client = $this->getRecaptchaClient();
@@ -66,8 +69,7 @@ class Recaptcha extends Component
             return false;
         }
 
-        //die(VarDumper::dumpAsString($result));
-        if (empty($result['success']) || (!empty($result['action']) && $result['action'] != "homepage")) {
+        if (empty($result['success']) || (!empty($result['action']) && $result['action'] != $recaptchaAction)) {
             Craft::warning("reCAPTCHA check failed: " . VarDumper::dumpAsString($result), __METHOD__);
             return false;
         }

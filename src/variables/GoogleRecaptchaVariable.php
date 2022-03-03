@@ -59,7 +59,9 @@ class GoogleRecaptchaVariable
 
         $siteKey = App::parseEnv($settings->siteKey);
         if ((int)App::parseEnv($settings->version) === 3) {
-            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options);
+            $action = $options['action'] ?? 'homepage';
+            ArrayHelper::remove($options, 'action');
+            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $action);
         } else {
             $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender);
         }
@@ -71,18 +73,21 @@ class GoogleRecaptchaVariable
      * @param string $id
      * @param string $siteKey
      * @param array $options
+     * @param string $action
      * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      */
-    private static function _getV3Tag(string $id, string $siteKey, array $options): string
+    private static function _getV3Tag(string $id, string $siteKey, array $options, string $action): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
-            'id' => $id,
-            'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id])),
-            'siteKey' => $siteKey,
+            'id'          => $id,
+            'action'      => $action,
+            'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id]))
+                . Html::hiddenInput('g-recaptcha-action', Craft::$app->getSecurity()->hashData($action)),
+            'siteKey'     => $siteKey,
         ], View::TEMPLATE_MODE_CP);
     }
 
@@ -103,13 +108,13 @@ class GoogleRecaptchaVariable
     private static function _getV2Tag(string $id, string $siteKey, array $options, string $size, string $theme, string $badge, bool $instantRender): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v2', [
-            'callbackName' => StringHelper::camelCase($id),
-            'id' => $id,
-            'div' => Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id])),
-            'siteKey' => $siteKey,
-            'size' => $size,
-            'theme' => $theme,
-            'badge' => $badge,
+            'callbackName'  => StringHelper::camelCase($id),
+            'id'            => $id,
+            'div'           => Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id])),
+            'siteKey'       => $siteKey,
+            'size'          => $size,
+            'theme'         => $theme,
+            'badge'         => $badge,
             'instantRender' => $instantRender
         ], View::TEMPLATE_MODE_CP);
     }

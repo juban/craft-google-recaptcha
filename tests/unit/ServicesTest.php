@@ -30,6 +30,7 @@ use yii\web\ForbiddenHttpException;
  */
 class ServicesTest extends BaseUnitTest
 {
+    public const ACTION_HOMEPAGE = 'homepage';
     /**
      * @var UnitTester
      */
@@ -40,7 +41,10 @@ class ServicesTest extends BaseUnitTest
     public function _before()
     {
         parent::_before();
-        Craft::$app->request->setBodyParams(['g-recaptcha-response' => 'some-response']);
+        Craft::$app->request->setBodyParams([
+            'g-recaptcha-response' => 'some-response',
+            'g-recaptcha-action'   => Craft::$app->getSecurity()->hashData(self::ACTION_HOMEPAGE)
+        ]);
     }
 
     public function testSuccessfulVerify(): void
@@ -50,7 +54,7 @@ class ServicesTest extends BaseUnitTest
                 'getStatusCode' => 200,
                 'getBody'       => Utils::streamFor(Json::encode([
                     'success' => true,
-                    'action'  => 'homepage'
+                    'action'  => self::ACTION_HOMEPAGE
                 ]))
             ]);
         $googleRecaptchaService = $this->make(Recaptcha::class, [
@@ -102,7 +106,7 @@ class ServicesTest extends BaseUnitTest
                 'getStatusCode' => 200,
                 'getBody'       => Utils::streamFor(Json::encode([
                     'success' => true,
-                    'score' => 0.9
+                    'score'   => 0.9
                 ]))
             ]);
         $googleRecaptchaService = $this->make(Recaptcha::class, [
@@ -122,7 +126,7 @@ class ServicesTest extends BaseUnitTest
                 'getStatusCode' => 200,
                 'getBody'       => Utils::streamFor(Json::encode([
                     'success' => true,
-                    'score' => 0.5
+                    'score'   => 0.5
                 ]))
             ]);
         $googleRecaptchaService = $this->make(Recaptcha::class, [
