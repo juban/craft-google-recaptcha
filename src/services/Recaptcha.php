@@ -75,7 +75,7 @@ class Recaptcha extends Component
         }
 
         if (!empty($result['action'])) {
-            if ((!empty($result['action']) && $result['action'] != $recaptchaAction)) {
+            if ($result['action'] != $recaptchaAction) {
                 Craft::warning("reCAPTCHA check failed: " . VarDumper::dumpAsString($result), __METHOD__);
                 return false;
             }
