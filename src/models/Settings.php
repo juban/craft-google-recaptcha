@@ -13,6 +13,8 @@ namespace simplonprod\googlerecaptcha\models;
 use Craft;
 use craft\base\Model;
 use craft\behaviors\EnvAttributeParserBehavior;
+use craft\helpers\ArrayHelper;
+use yii\base\DynamicModel;
 
 /**
  * GoogleRecaptcha Settings Model
@@ -39,7 +41,9 @@ class Settings extends Model
     public $size;
     public $theme;
     public $badge;
+    public $actionName = 'homepage';
     public $scoreThreshold;
+    public $actions = [];
 
     public function behaviors()
     {
@@ -53,10 +57,50 @@ class Settings extends Model
                 'size',
                 'theme',
                 'badge',
+                'actionName',
                 'scoreThreshold'
             ],
         ];
         return $behaviors;
+    }
+
+    /**
+     * Validates the actions.
+     */
+    public function validateActions()
+    {
+        $hasErrors = false;
+        foreach ($this->actions as &$action) {
+            $model = DynamicModel::validateData($action, [
+                [['name', 'scoreThreshold'], 'required'],
+                ['name', 'trim'],
+                ['name', 'match', 'pattern' => '/^[\w\/]+$/'],
+                ['scoreThreshold', 'double', 'min' => 0, 'max' => 1]
+            ]);
+            $action = $model;
+            if ($model->hasErrors('name')) {
+                $action['name'] = ['value' => $action['name'], 'hasErrors' => true];
+                $hasErrors = true;
+            }
+            if ($model->hasErrors('scoreThreshold')) {
+                $action['scoreThreshold'] = ['value' => $action['scoreThreshold'], 'hasErrors' => true];
+                $hasErrors = true;
+            }
+        }
+        unset($action);
+
+        if ($hasErrors) {
+            $this->addError('actions', Craft::t('google-recaptcha', 'Some actions values are incorrect.'));
+        }
+    }
+
+    /**
+     * Return an indexed array with actions as keys and score threshold as values
+     * @return array
+     */
+    public function getScoreThresholdPerAction(): array
+    {
+        return ArrayHelper::map($this->actions, 'name', 'scoreThreshold');
     }
 
     /**
@@ -66,20 +110,36 @@ class Settings extends Model
     {
         $rules = parent::defineRules();
         $rules[] = ['scoreThreshold', 'default', 'value' => null];
+        $rules[] = ['actionName', 'default', 'value' => 'homepage'];
         $rules[] = [['version', 'siteKey', 'secretKey'], 'required'];
         $rules[] = [
             ['size', 'theme', 'badge'],
             'required',
             'when' => function ($model) {
-                return $model->version === 2;
+                return ((int)$model->version) === 2;
             }
         ];
         $rules[] = ['version', 'in', 'range' => array_keys(self::getVersionOptions())];
         $rules[] = ['size', 'in', 'range' => array_keys(self::getSizeOptions()), 'skipOnEmpty' => true];
         $rules[] = ['theme', 'in', 'range' => array_keys(self::getThemeOptions()), 'skipOnEmpty' => true];
         $rules[] = ['badge', 'in', 'range' => array_keys(self::getBadgeOptions()), 'skipOnEmpty' => true];
+        $rules[] = [
+            'actionName',
+            'match',
+            'pattern' => '/^[\w\/]+$/',
+            'when'    => function ($model) {
+                return ((int)$model->version) === 3;
+            }
+        ];
         $rules[] = ['scoreThreshold', 'double', 'min' => 0, 'max' => 1, 'skipOnEmpty' => true];
-
+        $rules[] = [
+            'actions',
+            'validateActions',
+            'skipOnEmpty' => true,
+            'when'        => function ($model) {
+                return ((int)$model->version) === 3;
+            }
+        ];
         return $rules;
     }
 
@@ -116,4 +176,6 @@ class Settings extends Model
             'inline'      => Craft::t('google-recaptcha', 'Inline')
         ];
     }
+
+
 }

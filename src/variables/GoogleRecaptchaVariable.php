@@ -59,7 +59,7 @@ class GoogleRecaptchaVariable
 
         $siteKey = App::parseEnv($settings->siteKey);
         if ((int)App::parseEnv($settings->version) === 3) {
-            $action = $options['action'] ?? 'homepage';
+            $action = $options['action'] ?? $settings->actionName;
             ArrayHelper::remove($options, 'action');
             $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $action);
         } else {

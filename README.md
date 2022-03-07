@@ -24,8 +24,15 @@ You can manage configuration setting through the Control Panel by going to Setti
 
 * Provide the Site Key and the Secret Key obtained from [your reCAPTCHA account](https://www.google.com/recaptcha/admin).
 * Select the API version accordingly to the reCAPTCHA type you created the keys upon.
-* For v2 API: select desired look and feel for Theme, Size and Badge parameters.
-* For v3 API: optionally (but recommended) specify the minimum score the user will have to obtain in order to validate the reCATPTCHA challenge (see here for help on interpreting the score)
+* For v2 API, select the following parameters: 
+	* Size: Select the size of the reCAPTCHA widget. 
+	* Theme: Select the color theme of the reCAPTCHA widget.
+	* Badge: Select the position of the reCAPTCHA badge.
+* For v3 API: 
+	* Default Action: the default action name to be used during reCAPTCHA verification. Defaults to `homepage` if blank.
+	* Default Score Threshold : Minimum score between 0 and 1 to obtain in order for the end user to validate the reCAPTHCHA challenge (see [here](https://developers.google.com/recaptcha/docs/v3#interpreting_the_score) for help on interpreting the score)
+. Leave blank for no score checking. 	
+	* Actions: A score threshold can be defined per action here.
 
 ### Configuration file
 
@@ -36,10 +43,18 @@ return [
     "version"   		=> 2, // Either 2 our 3
     "siteKey"   		=> '', // Site key
     "secretKey" 		=> '', // Secret key
-    "size"      		=> 'normal', // normal, compact or invisible
-    "theme"     		=> 'light', // light or dark
-    "badge"     		=> 'bottomright' // bottomright, bottomleft or inline
-    "scoreThreshold"	=> 0.5 // Value between 0 and 1 to determine the minimum score to validate reCAPTCHA v3
+    "size"      		=> 'normal', // (v2) normal, compact or invisible
+    "theme"     		=> 'light', // (v2) light or dark
+    "badge"     		=> 'bottomright', // (v2) bottomright, bottomleft or inline
+    "actionName"        => 'homepage', // (v3) Default action name
+    "scoreThreshold"	=> 0.5 // (v3) Value between 0 and 1 to determine the minimum score to validate
+    "actions"			=> [ // (v3) List of actions with their associated score threshold value (see the template part below to know how to specify the action parameter in the render method)
+    	[
+    		'name' 				=> 'some_action_name',
+    		'scoreThreshold' 	=> 0.5
+    	]
+    ]
+    
 ];
 ```
 
@@ -63,7 +78,15 @@ For example, to provide a container id, you can do:
 {{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }) }}
 ```
 
-> 💡 For API v2, you can provide a second boolean argument to the render method to trigger the instant rendering of the widget (ie. `{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}`).  
+For v3 API, an action parameter can also be provided as follow:
+
+```twig
+{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget', action: 'some_action_name' }) }}
+```
+
+In that case, the score threshold to be used for that action can be defined in the "Actions Settings" part of the plugin control panel.
+
+> 💡 For v2 API, you can provide a second boolean argument to the render method to trigger the instant rendering of the widget (ie. `{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}`). 
 > This is useful if you are working with views loaded through Ajax or [Sprig](https://plugins.craftcms.com/sprig) calls and you need to refresh the widget.
 
 ### Verify users submissions

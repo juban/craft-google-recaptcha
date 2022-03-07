@@ -1,11 +1,13 @@
 # Google Recaptcha Changelog
 
-## 1.1.0 - 2022-03-02
+## 1.1.0 - 2022-03-07
 ### Added
-- New score threshold configuration can be defined for Google reCAPTCHA v3
+- (v3 API) Default action name and score threshold can be configured
+- (v3 API) Score threshold can be defined per action
+- (v3 API) Ability to specify the action name in the twig `craft.googleRecaptcha.render()` function first parameter.
 
 ### Changed
-- Google reCAPTCHA version and options can now be set using environment variables
+- Google reCAPTCHA plugin options can now be set using environment variables
 - Bump minimum required Craft version to 3.7.29
 
 ## 1.0.4 - 2021-05-03

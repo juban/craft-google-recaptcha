@@ -13,6 +13,8 @@
  */
 #}
 
+{# {% do view.registerAssetBundle('craft\\web\\assets\\cp\\CpAsset') %} #}
+
 {% import "_includes/forms" as forms %}
 
 {% if configPath %}
@@ -51,15 +53,13 @@
     errors: settings.getErrors('secretKey')
 }) }}
 
-{{ forms.selectizeField({
+{{ forms.selectField({
     label: "API Version"|t('google-recaptcha'),
     instructions: "Select the reCAPTCHA version."|t('google-recaptcha'),
     id: 'version',
     name: 'version',
     value: settings.version,
     options: settings.getVersionOptions(),
-    includeEnvVars: true,
-    allowedEnvValues: settings.getVersionOptions()|keys,
     errors: settings.getErrors('version'),
     toggle: true,
 }) }}
@@ -71,6 +71,7 @@
         instructions: "Select the size of the reCAPTCHA widget."|t('google-recaptcha'),
         id: 'size',
         name: 'size',
+        required: true,
         value: settings.size,
         options: settings.getSizeOptions(),
         includeEnvVars: true,
@@ -83,6 +84,7 @@
         instructions: "Select the color theme of the reCAPTCHA widget."|t('google-recaptcha'),
         id: 'theme',
         name: 'theme',
+        required: true,
         value: settings.theme,
         options: settings.getThemeOptions(),
         includeEnvVars: true,
@@ -95,6 +97,7 @@
         instructions: "Select the position of the reCAPTCHA badge."|t('google-recaptcha'),
         id: 'badge',
         name: 'badge',
+        required: true,
         value: settings.badge,
         options: settings.getBadgeOptions(),
         includeEnvVars: true,
@@ -107,7 +110,19 @@
 <div id="3" {{ settings.version == 2 ? 'class="hidden"' }}>
 
     {{ forms.autosuggestField({
-        label: "Score threshold"|t('google-recaptcha'),
+        label: "Default Action"|t('google-recaptcha'),
+        instructions: "Name of the reCAPTCHA action parameter."|t('google-recaptcha'),
+        id: 'actionName',
+        name: 'actionName',
+        required: true,
+        placeholder: 'homepage',
+        value: settings.actionName,
+        suggestEnvVars: true,
+        errors: settings.getErrors('actionName')
+    }) }}
+
+    {{ forms.autosuggestField({
+        label: "Default Score Threshold"|t('google-recaptcha'),
         instructions: "Minimum score between 0 and 1 to obtain in order for the end user to validate the reCAPTHCHA challenge. Leave blank for no score checking."|t('google-recaptcha'),
         id: 'scoreThreshold',
         name: 'scoreThreshold',
@@ -116,4 +131,28 @@
         errors: settings.getErrors('scoreThreshold')
     }) }}
 
+    {{ forms.editableTableField({
+        label: "Actions Settings"|t('google-recaptcha'),
+        instructions: "Score threshold per action."|t('google-recaptcha'),
+        id: 'actions',
+        name: 'actions',
+        addRowLabel: 'Add an action'|t('google-recaptcha'),
+        cols: {
+            name: {
+                type: 'singleline',
+                heading: "Action"|t('google-recaptcha'),
+                info: "Name of the action. Only alphanumeric characters, slashes (/), and underscores (_)."|t('google-recaptcha'),
+            },
+            scoreThreshold: {
+                type: 'number',
+                heading: "Score Threshold"|t('google-recaptcha'),
+                info: "Minimum score to obtain in order for the end user to validate the reCAPTHCHA challenge."|t('google-recaptcha'),
+                placeholder: "Decimal value between 0 and 1"|t('google-recaptcha')
+            }
+        }|filter,
+        rows: settings.actions,
+        errors: settings.getErrors('actions')|unique
+    }) }}
+
 </div>
+

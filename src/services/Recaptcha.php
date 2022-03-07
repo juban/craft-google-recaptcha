@@ -69,14 +69,25 @@ class Recaptcha extends Component
             return false;
         }
 
-        if (empty($result['success']) || (!empty($result['action']) && $result['action'] != $recaptchaAction)) {
+        if (empty($result['success'])) {
             Craft::warning("reCAPTCHA check failed: " . VarDumper::dumpAsString($result), __METHOD__);
             return false;
         }
-        // Check for score if v3
-        if ((int)App::parseEnv($settings->version) === 3 && isset($result['score']) && (double)$result['score'] < (double)$settings->scoreThreshold) {
-            Craft::warning("reCAPTCHA score checking failed: " . $result['score'], __METHOD__);
-            return false;
+
+        if (!empty($result['action'])) {
+            if ((!empty($result['action']) && $result['action'] != $recaptchaAction)) {
+                Craft::warning("reCAPTCHA check failed: " . VarDumper::dumpAsString($result), __METHOD__);
+                return false;
+            }
+
+            if (isset($result['score'])) {
+                $scoreThresholdPerAction = $settings->getScoreThresholdPerAction();
+                $scoreThreshold = $scoreThresholdPerAction[$result['action']] ?? App::parseEnv($settings->scoreThreshold);
+                if ($scoreThreshold !== null && (double)$result['score'] < (double)$scoreThreshold) {
+                    Craft::warning("reCAPTCHA score checking failed: " . $result['score'], __METHOD__);
+                    return false;
+                }
+            }
         }
 
         return true;

@@ -95,6 +95,26 @@ class ServicesTest extends BaseUnitTest
         $this->assertFalse($googleRecaptchaService->verify());
     }
 
+    public function testFailedVerifyWithWrongAction(): void
+    {
+        GoogleRecaptcha::$plugin->setSettings([
+            'version'    => 3,
+            'actionName' => 'homepage'
+        ]);
+        $response = $this->make(Response::class,
+            [
+                'getStatusCode' => 200,
+                'getBody'       => Utils::streamFor(Json::encode([
+                    'success' => true,
+                    'action'  => 'newsletter'
+                ]))
+            ]);
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $this->_getClientMock($response)
+        ]);
+        $this->assertFalse($googleRecaptchaService->verify());
+    }
+
     public function testSuccessfulVerifyWithScore(): void
     {
         GoogleRecaptcha::$plugin->setSettings([
@@ -115,6 +135,54 @@ class ServicesTest extends BaseUnitTest
         $this->assertTrue($googleRecaptchaService->verify());
     }
 
+    public function testSuccessfulVerifyWithScorePerAction(): void
+    {
+        \Craft::$app->request->setBodyParams([
+            'g-recaptcha-response' => 'some-response',
+            'g-recaptcha-action'   => Craft::$app->getSecurity()->hashData('some_action')
+        ]);
+        $response = $this->make(Response::class,
+            [
+                'getStatusCode' => 200,
+                'getBody'       => Utils::streamFor(Json::encode([
+                    'success' => true,
+                    'action'  => 'some_action',
+                    'score'   => 0.9
+                ]))
+            ]);
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $this->_getClientMock($response)
+        ]);
+        $this->assertTrue($googleRecaptchaService->verify());
+    }
+
+    public function testFailedVerifyWithScorePerAction(): void
+    {
+        \Craft::$app->request->setBodyParams([
+            'g-recaptcha-response' => 'some-response',
+            'g-recaptcha-action'   => Craft::$app->getSecurity()->hashData('some_action')
+        ]);
+        GoogleRecaptcha::$plugin->setSettings([
+            'version' => 3,
+            'actions' => [
+                ['name' => 'some_action', 'scoreThreshold' => 0.8]
+            ]
+        ]);
+        $response = $this->make(Response::class,
+            [
+                'getStatusCode' => 200,
+                'getBody'       => Utils::streamFor(Json::encode([
+                    'success' => true,
+                    'action'  => 'some_action',
+                    'score'   => 0.5
+                ]))
+            ]);
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $this->_getClientMock($response)
+        ]);
+        $this->assertFalse($googleRecaptchaService->verify());
+    }
+
     public function testFailedVerifyWithScore(): void
     {
         GoogleRecaptcha::$plugin->setSettings([
@@ -126,6 +194,7 @@ class ServicesTest extends BaseUnitTest
                 'getStatusCode' => 200,
                 'getBody'       => Utils::streamFor(Json::encode([
                     'success' => true,
+                    'action'  => 'homepage',
                     'score'   => 0.5
                 ]))
             ]);

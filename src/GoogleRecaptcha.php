@@ -2,8 +2,6 @@
 /**
  * Google Recaptcha plugin for Craft CMS 3.x
  *
- * Google Recaptcha for Craft CMS
- *
  * @link      https://www.simplonprod.co
  * @copyright Copyright (c) 2021 Simplon.Prod
  */
@@ -22,15 +20,6 @@ use simplonprod\googlerecaptcha\variables\GoogleRecaptchaVariable;
 use yii\base\Event;
 
 /**
- * Craft plugins are very much like little applications in and of themselves. We’ve made
- * it as simple as we can, but the training wheels are off. A little prior knowledge is
- * going to be required to write a plugin.
- *
- * For the purposes of the plugin docs, we’re going to assume that you know PHP and SQL,
- * as well as some semi-advanced concepts like object-oriented programming and PHP namespaces.
- *
- * https://docs.craftcms.com/v3/extend/
- *
  * @author    Simplon.Prod
  * @package   GoogleRecaptcha
  * @since     1.0.0
@@ -55,40 +44,17 @@ class GoogleRecaptcha extends Plugin
     // Public Properties
     // =========================================================================
 
-    /**
-     * To execute your plugin’s migrations, you’ll need to increase its schema version.
-     *
-     * @var string
-     */
     public $schemaVersion = '1.0.0';
 
-    /**
-     * Set to `true` if the plugin should have a settings view in the control panel.
-     *
-     * @var bool
-     */
     public $hasCpSettings = true;
 
-    /**
-     * Set to `true` if the plugin should have its own section (main nav item) in the control panel.
-     *
-     * @var bool
-     */
     public $hasCpSection = false;
 
     // Public Methods
     // =========================================================================
 
     /**
-     * Set our $plugin static property to this class so that it can be accessed via
-     * GoogleRecaptcha::$plugin
-     *
-     * Called after the plugin class is instantiated; do any one-time initialization
-     * here such as hooks and events.
-     *
-     * If you have a '/vendor/autoload.php' file, it will be loaded for you automatically;
-     * you do not need to load it in your init() method.
-     *
+     * @return void
      */
     public function init()
     {
@@ -110,6 +76,35 @@ class GoogleRecaptcha extends Plugin
 
     // Protected Methods
     // =========================================================================
+
+    private function _registerTwigVariables()
+    {
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function (Event $event) {
+                /** @var CraftVariable $variable */
+                $variable = $event->sender;
+                $variable->set('googleRecaptcha', GoogleRecaptchaVariable::class);
+            }
+        );
+    }
+
+    private function _registerAfterInstall()
+    {
+        Event::on(
+            Plugins::class,
+            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
+            function (PluginEvent $event) {
+                if ($event->plugin === $this && Craft::$app->getRequest()->getIsCpRequest()) {
+                    // Redirect to settings page
+                    Craft::$app->getResponse()->redirect(
+                        UrlHelper::cpUrl('settings/plugins/google-recaptcha')
+                    )->send();
+                }
+            }
+        );
+    }
 
     /**
      * Creates and returns the model used to store the plugin’s settings.
@@ -140,35 +135,6 @@ class GoogleRecaptcha extends Plugin
                 'settings'   => $this->getSettings(),
                 'configPath' => $configPath ?? null
             ]
-        );
-    }
-
-    private function _registerAfterInstall()
-    {
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this && Craft::$app->getRequest()->getIsCpRequest()) {
-                    // Redirect to settings page
-                    Craft::$app->getResponse()->redirect(
-                        UrlHelper::cpUrl('settings/plugins/google-recaptcha')
-                    )->send();
-                }
-            }
-        );
-    }
-
-    private function _registerTwigVariables()
-    {
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('googleRecaptcha', GoogleRecaptchaVariable::class);
-            }
         );
     }
 }
