@@ -52,14 +52,14 @@ class Recaptcha extends Component
         $client = $this->getRecaptchaClient();
         $settings = GoogleRecaptcha::$plugin->getSettings();
         $params = [
-            'secret'   => App::parseEnv($settings->secretKey),
+            'secret' => App::parseEnv($settings->secretKey),
             'response' => $recaptchaResponse,
             'remoteip' => $request->getUserIP(),
         ];
         try {
             Craft::debug("Checking reCAPTCHA response", __METHOD__);
             $response = $client->request('POST', 'siteverify', [
-                'form_params' => $params
+                'form_params' => $params,
             ]);
             if ($response->getStatusCode() == 200) {
                 $result = Json::decodeIfJson($response->getBody());
@@ -83,7 +83,7 @@ class Recaptcha extends Component
             if (isset($result['score'])) {
                 $scoreThresholdPerAction = $settings->getScoreThresholdPerAction();
                 $scoreThreshold = $scoreThresholdPerAction[$result['action']] ?? App::parseEnv($settings->scoreThreshold);
-                if ($scoreThreshold !== null && (double)$result['score'] < (double)$scoreThreshold) {
+                if ($scoreThreshold !== null && (float)$result['score'] < (float)$scoreThreshold) {
                     Craft::warning("reCAPTCHA score checking failed: " . $result['score'], __METHOD__);
                     return false;
                 }
@@ -100,8 +100,8 @@ class Recaptcha extends Component
     public function getRecaptchaClient(): Client
     {
         return new Client([
-            'base_uri'        => 'https://www.google.com/recaptcha/api/',
-            'timeout'         => 5,
+            'base_uri' => 'https://www.google.com/recaptcha/api/',
+            'timeout' => 5,
             'connect_timeout' => 5,
         ]);
     }

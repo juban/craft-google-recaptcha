@@ -83,11 +83,11 @@ class GoogleRecaptchaVariable
     private static function _getV3Tag(string $id, string $siteKey, array $options, string $action): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
-            'id'          => $id,
-            'action'      => $action,
+            'id' => $id,
+            'action' => $action,
             'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id]))
                 . Html::hiddenInput('g-recaptcha-action', Craft::$app->getSecurity()->hashData($action)),
-            'siteKey'     => $siteKey,
+            'siteKey' => $siteKey,
         ], View::TEMPLATE_MODE_CP);
     }
 
@@ -108,14 +108,14 @@ class GoogleRecaptchaVariable
     private static function _getV2Tag(string $id, string $siteKey, array $options, string $size, string $theme, string $badge, bool $instantRender): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v2', [
-            'callbackName'  => StringHelper::camelCase($id),
-            'id'            => $id,
-            'div'           => Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id])),
-            'siteKey'       => $siteKey,
-            'size'          => $size,
-            'theme'         => $theme,
-            'badge'         => $badge,
-            'instantRender' => $instantRender
+            'callbackName' => StringHelper::camelCase($id),
+            'id' => $id,
+            'div' => Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id])),
+            'siteKey' => $siteKey,
+            'size' => $size,
+            'theme' => $theme,
+            'badge' => $badge,
+            'instantRender' => $instantRender,
         ], View::TEMPLATE_MODE_CP);
     }
 }

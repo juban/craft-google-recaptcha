@@ -49,7 +49,7 @@ class Settings extends Model
     {
         $behaviors = parent::behaviors();
         $behaviors['parser'] = [
-            'class'      => EnvAttributeParserBehavior::class,
+            'class' => EnvAttributeParserBehavior::class,
             'attributes' => [
                 'siteKey',
                 'secretKey',
@@ -58,7 +58,7 @@ class Settings extends Model
                 'theme',
                 'badge',
                 'actionName',
-                'scoreThreshold'
+                'scoreThreshold',
             ],
         ];
         return $behaviors;
@@ -75,7 +75,7 @@ class Settings extends Model
                 [['name', 'scoreThreshold'], 'required'],
                 ['name', 'trim'],
                 ['name', 'match', 'pattern' => '/^[\w\/]+$/'],
-                ['scoreThreshold', 'double', 'min' => 0, 'max' => 1]
+                ['scoreThreshold', 'double', 'min' => 0, 'max' => 1],
             ]);
             $action = $model;
             if ($model->hasErrors('name')) {
@@ -115,9 +115,9 @@ class Settings extends Model
         $rules[] = [
             ['size', 'theme', 'badge'],
             'required',
-            'when' => function ($model) {
+            'when' => function($model) {
                 return ((int)$model->version) === 2;
-            }
+            },
         ];
         $rules[] = ['version', 'in', 'range' => array_keys(self::getVersionOptions())];
         $rules[] = ['size', 'in', 'range' => array_keys(self::getSizeOptions()), 'skipOnEmpty' => true];
@@ -127,18 +127,18 @@ class Settings extends Model
             'actionName',
             'match',
             'pattern' => '/^[\w\/]+$/',
-            'when'    => function ($model) {
+            'when' => function($model) {
                 return ((int)$model->version) === 3;
-            }
+            },
         ];
         $rules[] = ['scoreThreshold', 'double', 'min' => 0, 'max' => 1, 'skipOnEmpty' => true];
         $rules[] = [
             'actions',
             'validateActions',
             'skipOnEmpty' => true,
-            'when'        => function ($model) {
+            'when' => function($model) {
                 return ((int)$model->version) === 3;
-            }
+            },
         ];
         return $rules;
     }
@@ -147,16 +147,16 @@ class Settings extends Model
     {
         return [
             3 => 'v3',
-            2 => 'v2'
+            2 => 'v2',
         ];
     }
 
     public static function getSizeOptions(): array
     {
         return [
-            'normal'    => Craft::t('google-recaptcha', 'Normal'),
-            'compact'   => Craft::t('google-recaptcha', 'Compact'),
-            'invisible' => Craft::t('google-recaptcha', 'Invisible')
+            'normal' => Craft::t('google-recaptcha', 'Normal'),
+            'compact' => Craft::t('google-recaptcha', 'Compact'),
+            'invisible' => Craft::t('google-recaptcha', 'Invisible'),
         ];
     }
 
@@ -164,7 +164,7 @@ class Settings extends Model
     {
         return [
             'light' => Craft::t('google-recaptcha', 'Light'),
-            'dark'  => Craft::t('google-recaptcha', 'Dark')
+            'dark' => Craft::t('google-recaptcha', 'Dark'),
         ];
     }
 
@@ -172,10 +172,8 @@ class Settings extends Model
     {
         return [
             'bottomright' => Craft::t('google-recaptcha', 'Bottom right'),
-            'bottomleft'  => Craft::t('google-recaptcha', 'Bottom left'),
-            'inline'      => Craft::t('google-recaptcha', 'Inline')
+            'bottomleft' => Craft::t('google-recaptcha', 'Bottom left'),
+            'inline' => Craft::t('google-recaptcha', 'Inline'),
         ];
     }
-
-
 }

@@ -82,7 +82,7 @@ class GoogleRecaptcha extends Plugin
         Event::on(
             CraftVariable::class,
             CraftVariable::EVENT_INIT,
-            function (Event $event) {
+            function(Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
                 $variable->set('googleRecaptcha', GoogleRecaptchaVariable::class);
@@ -95,7 +95,7 @@ class GoogleRecaptcha extends Plugin
         Event::on(
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
+            function(PluginEvent $event) {
                 if ($event->plugin === $this && Craft::$app->getRequest()->getIsCpRequest()) {
                     // Redirect to settings page
                     Craft::$app->getResponse()->redirect(
@@ -132,8 +132,8 @@ class GoogleRecaptcha extends Plugin
         return Craft::$app->view->renderTemplate(
             'google-recaptcha/settings',
             [
-                'settings'   => $this->getSettings(),
-                'configPath' => $configPath ?? null
+                'settings' => $this->getSettings(),
+                'configPath' => $configPath ?? null,
             ]
         );
     }
