@@ -1,4 +1,4 @@
-# Google reCAPTCHA plugin for Craft CMS 3
+# Google reCAPTCHA plugin for Craft CMS 4
 
 ![](logo.png)
 
