@@ -45,7 +45,7 @@ class Settings extends Model
     public $scoreThreshold;
     public $actions = [];
 
-    public function behaviors()
+    public function behaviors(): array
     {
         $behaviors = parent::behaviors();
         $behaviors['parser'] = [
