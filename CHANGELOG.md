@@ -1,5 +1,10 @@
 # Google Recaptcha Changelog
 
+## 2.0.0 - 2022-05-08
+
+### Added
+- Added Craft 4 compatibility.
+
 ## 1.1.0 - 2022-03-07
 ### Added
 - (v3 API) Default action name and score threshold can be configured
