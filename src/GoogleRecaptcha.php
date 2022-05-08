@@ -44,11 +44,11 @@ class GoogleRecaptcha extends Plugin
     // Public Properties
     // =========================================================================
 
-    public $schemaVersion = '1.0.0';
+    public string $schemaVersion = '1.0.0';
 
-    public $hasCpSettings = true;
+    public bool $hasCpSettings = true;
 
-    public $hasCpSection = false;
+    public bool $hasCpSection = false;
 
     // Public Methods
     // =========================================================================
@@ -111,7 +111,7 @@ class GoogleRecaptcha extends Plugin
      *
      * @return \craft\base\Model|null
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): ?\craft\base\Model
     {
         return new Settings();
     }
@@ -122,7 +122,7 @@ class GoogleRecaptcha extends Plugin
      *
      * @return string The rendered settings HTML
      */
-    protected function settingsHtml(): string
+    protected function settingsHtml(): ?string
     {
         $configService = Craft::$app->getConfig();
         $config = $configService->getConfigFromFile('google-recaptcha');
