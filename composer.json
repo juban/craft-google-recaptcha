@@ -31,7 +31,8 @@
     "codeception/module-yii2": "^1.0.0",
     "codeception/module-asserts": "^1.0.0",
     "codeception/module-db": "^1.1",
-    "craftcms/ecs": "dev-main"
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main"
   },
   "autoload": {
     "psr-4": {
