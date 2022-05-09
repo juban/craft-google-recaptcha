@@ -42,12 +42,12 @@ class VariablesTest extends BaseUnitTest
     public function testRenderV2NormalWithoutParams(): void
     {
         GoogleRecaptcha::$plugin->setSettings([
-            'version'   => 2,
-            'siteKey'   => 'some-site-key',
+            'version' => 2,
+            'siteKey' => 'some-site-key',
             'secretKey' => 'some-secret-key',
-            'size'      => 'normal',
-            'theme'     => 'light',
-            'badge'     => 'bottomright'
+            'size' => 'normal',
+            'theme' => 'light',
+            'badge' => 'bottomright',
         ]);
         $output = $this->variable->render();
         $isValid = (bool)preg_match(self::V2_OUTPUT_PATTERN, $output, $matches);
@@ -64,12 +64,12 @@ class VariablesTest extends BaseUnitTest
     public function testRenderV2NormalWithParams()
     {
         GoogleRecaptcha::$plugin->setSettings([
-            'version'   => 2,
-            'siteKey'   => 'some-site-key',
+            'version' => 2,
+            'siteKey' => 'some-site-key',
             'secretKey' => 'some-secret-key',
-            'size'      => 'normal',
-            'theme'     => 'light',
-            'badge'     => 'bottomright'
+            'size' => 'normal',
+            'theme' => 'light',
+            'badge' => 'bottomright',
         ]);
         $output = $this->variable->render(['id' => 'my-recaptcha']);
         $isValid = (bool)preg_match(self::V2_OUTPUT_PATTERN, $output, $matches);
@@ -85,12 +85,12 @@ class VariablesTest extends BaseUnitTest
     public function testRenderV2InvisibleWithParams()
     {
         GoogleRecaptcha::$plugin->setSettings([
-            'version'   => 2,
-            'siteKey'   => 'some-site-key',
+            'version' => 2,
+            'siteKey' => 'some-site-key',
             'secretKey' => 'some-secret-key',
-            'size'      => 'invisible',
-            'theme'     => 'light',
-            'badge'     => 'bottomright'
+            'size' => 'invisible',
+            'theme' => 'light',
+            'badge' => 'bottomright',
         ]);
         $output = $this->variable->render(['id' => 'my-recaptcha']);
         $isValid = (bool)preg_match(self::V2_OUTPUT_PATTERN, $output, $matches);
@@ -107,12 +107,12 @@ class VariablesTest extends BaseUnitTest
     public function testRenderV2CompactInstant()
     {
         GoogleRecaptcha::$plugin->setSettings([
-            'version'   => 2,
-            'siteKey'   => 'some-site-key',
+            'version' => 2,
+            'siteKey' => 'some-site-key',
             'secretKey' => 'some-secret-key',
-            'size'      => 'compact',
-            'theme'     => 'light',
-            'badge'     => 'bottomright'
+            'size' => 'compact',
+            'theme' => 'light',
+            'badge' => 'bottomright',
         ]);
         $output = $this->variable->render(['id' => 'my-recaptcha'], true);
         $isValid = (bool)preg_match(self::V2_OUTPUT_PATTERN, $output, $matches);
@@ -130,9 +130,9 @@ class VariablesTest extends BaseUnitTest
     public function testRenderV3WithoutParams(): void
     {
         GoogleRecaptcha::$plugin->setSettings([
-            'version'   => 3,
-            'siteKey'   => 'some-site-key',
-            'secretKey' => 'some-secret-key'
+            'version' => 3,
+            'siteKey' => 'some-site-key',
+            'secretKey' => 'some-secret-key',
         ]);
         $output = $this->variable->render();
         $isValid = (bool)preg_match(self::V3_OUTPUT_PATTERN, $output, $matches);
@@ -145,9 +145,9 @@ class VariablesTest extends BaseUnitTest
     public function testRenderV3WithParams()
     {
         GoogleRecaptcha::$plugin->setSettings([
-            'version'   => 3,
-            'siteKey'   => 'some-site-key',
-            'secretKey' => 'some-secret-key'
+            'version' => 3,
+            'siteKey' => 'some-site-key',
+            'secretKey' => 'some-secret-key',
         ]);
         $output = $this->variable->render(['id' => 'my-recaptcha']);
         $isValid = (bool)preg_match(self::V3_OUTPUT_PATTERN, $output, $matches);

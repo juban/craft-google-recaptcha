@@ -7,8 +7,6 @@
 namespace simplonprod\googlerecaptchatests\unit;
 
 use Codeception\Test\Unit;
-use simplonprod\googlerecaptcha\GoogleRecaptcha;
-use yii\base\InvalidRouteException;
 
 /**
  * BaseUnitTest class
@@ -17,5 +15,5 @@ use yii\base\InvalidRouteException;
  **/
 class BaseUnitTest extends Unit
 {
-    const PLUGIN_HANDLE = 'google-recaptcha';
+    public const PLUGIN_HANDLE = 'google-recaptcha';
 }

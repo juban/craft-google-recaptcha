@@ -14,9 +14,9 @@ class SettingsTest extends \Codeception\Test\Unit
         $this->settings->version = 3;
         $this->settings->actions = [
             [
-                'name'           => 'some_action',
-                'scoreThreshold' => 0.5
-            ]
+                'name' => 'some_action',
+                'scoreThreshold' => 0.5,
+            ],
         ];
         $this->assertTrue($this->settings->validate());
     }
@@ -26,13 +26,13 @@ class SettingsTest extends \Codeception\Test\Unit
         $this->settings->version = 3;
         $this->settings->actions = [
             [
-                'name'           => 'some_action',
-                'scoreThreshold' => 0.5
+                'name' => 'some_action',
+                'scoreThreshold' => 0.5,
             ],
             [
-                'name'           => 'other action',
-                'scoreThreshold' => ''
-            ]
+                'name' => 'other action',
+                'scoreThreshold' => '',
+            ],
         ];
         $this->assertFalse($this->settings->validate());
         $this->assertTrue($this->settings->actions[1]->hasErrors());

@@ -4,10 +4,10 @@
  * @copyright Copyright (c) 2021 Simplon.Prod
  */
 return [
-    'version'   => 2,
-    'siteKey'   => 'some-site-key',
+    'version' => 2,
+    'siteKey' => 'some-site-key',
     'secretKey' => 'some-secret-key',
-    'size'      => 'normal',
-    'theme'     => 'light',
-    'badge'     => 'bottomright'
+    'size' => 'normal',
+    'theme' => 'light',
+    'badge' => 'bottomright',
 ];
