@@ -1,5 +1,10 @@
 # Google Recaptcha Changelog
 
+## 2.0.1 - 2022-05-09
+
+### Fixed
+- reCAPTCHA v3 actions parameters were missing from the control panel
+
 ## 2.0.0 - 2022-05-08
 
 ### Added

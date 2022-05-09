@@ -52,4 +52,5 @@ return [
     'Minimum score to obtain in order for the end user to validate the reCAPTHCHA challenge.' => 'Score minimum à obtenir pour que l’utilisateur final valide le challenge reCAPTHCHA.',
     'Decimal value between 0 and 1' => 'Valeur décimale entre 0 et 1',
     'Some actions values are incorrect.' => 'Certaines valeurs d‘actions sont incorrectes . ',
+    'Add an action' => 'Ajouter une action',
 ];
