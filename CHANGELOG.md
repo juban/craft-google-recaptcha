@@ -1,5 +1,9 @@
 # Google Recaptcha Changelog
 
+## 1.1.1 - 2022-05-13
+### Fixed
+- Fix an exception that could occur in verify method if no actions parameters were saved
+
 ## 1.1.0 - 2022-03-07
 ### Added
 - (v3 API) Default action name and score threshold can be configured

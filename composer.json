@@ -1,66 +1,67 @@
 {
-  "name": "simplonprod/craft-google-recaptcha",
-  "description": "Google reCAPTCHA for Craft CMS",
-  "type": "craft-plugin",
-  "version": "1.1.0",
-  "keywords": [
-    "craft",
-    "cms",
-    "craftcms",
-    "craft-plugin",
-    "google recaptcha"
-  ],
-  "support": {
-    "docs": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
-    "issues": "https://github.com/Simplon-Prod/craft-google-recaptcha/issues"
-  },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Simplon.Prod",
-      "homepage": "https://www.simplonprod.co"
-    }
-  ],
-  "require": {
-    "php": ">=7.2.5",
-    "craftcms/cms": "^3.7.29"
-  },
-  "require-dev": {
-    "codeception/codeception": "^4.0.0",
-    "vlucas/phpdotenv": "^3.0",
-    "codeception/module-yii2": "^1.0.0",
-    "codeception/module-asserts": "^1.0.0",
-    "codeception/module-db": "^1.1",
-    "craftcms/ecs": "dev-main",
-    "craftcms/phpstan": "dev-main"
-  },
-  "autoload": {
-    "psr-4": {
-      "simplonprod\\googlerecaptcha\\": "src/"
-    }
-  },
-  "extra": {
-    "name": "Google reCAPTCHA",
-    "handle": "google-recaptcha",
-    "developer": "Simplon.Prod",
-    "developerUrl": "https://www.simplonprod.co",
-    "documentationUrl": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
-    "changelogUrl": "https://raw.githubusercontent.com/Simplon-Prod/craft-google-recaptcha/master/CHANGELOG.md",
-    "components": {
-      "recaptcha": "simplonprod\\googlerecaptcha\\services\\Recaptcha"
+    "name": "simplonprod/craft-google-recaptcha",
+    "description": "Google reCAPTCHA for Craft CMS",
+    "type": "craft-plugin",
+    "version": "1.1.1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "google recaptcha"
+    ],
+    "support": {
+        "docs": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
+        "issues": "https://github.com/Simplon-Prod/craft-google-recaptcha/issues"
     },
-    "class": "simplonprod\\googlerecaptcha\\GoogleRecaptcha"
-  },
-  "config": {
-    "allow-plugins": {
-      "yiisoft/yii2-composer": true,
-      "craftcms/plugin-installer": true
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simplon.Prod",
+            "homepage": "https://www.simplonprod.co"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "craftcms/cms": "^3.7.29"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.0.0",
+        "vlucas/phpdotenv": "^3.0",
+        "codeception/module-yii2": "^1.0.0",
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-db": "^1.1",
+        "craftcms/ecs": "dev-main",
+        "craftcms/phpstan": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "simplonprod\\googlerecaptcha\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Google reCAPTCHA",
+        "handle": "google-recaptcha",
+        "developer": "Simplon.Prod",
+        "developerUrl": "https://www.simplonprod.co",
+        "documentationUrl": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/Simplon-Prod/craft-google-recaptcha/master/CHANGELOG.md",
+        "components": {
+            "recaptcha": "simplonprod\\googlerecaptcha\\services\\Recaptcha"
+        },
+        "class": "simplonprod\\googlerecaptcha\\GoogleRecaptcha"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "check-cs": "ecs check --ansi",
+        "fix-cs": "ecs check --ansi --fix",
+        "phpstan": "phpstan --memory-limit=1G"
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "check-cs": "ecs check --ansi",
-    "fix-cs": "ecs check --ansi --fix"
-  }
 }
