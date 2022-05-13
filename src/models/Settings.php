@@ -100,7 +100,10 @@ class Settings extends Model
      */
     public function getScoreThresholdPerAction(): array
     {
-        return ArrayHelper::map($this->actions, 'name', 'scoreThreshold');
+        if (is_array($this->actions)) {
+            return ArrayHelper::map($this->actions, 'name', 'scoreThreshold');
+        }
+        return [];
     }
 
     /**

@@ -230,4 +230,29 @@ class ServicesTest extends BaseUnitTest
         $this->expectException(ForbiddenHttpException::class);
         GoogleRecaptcha::$plugin->recaptcha->verify();
     }
+
+    public function testVerifyWithEmptyActionsSettings(): void
+    {
+        GoogleRecaptcha::$plugin->setSettings([
+            'version' => 3,
+            'actions' => '',
+        ]);
+        $response = $this->make(
+            Response::class,
+            [
+                'getStatusCode' => 200,
+                'getBody' => Utils::streamFor(
+                    Json::encode([
+                        'success' => true,
+                        'action' => 'homepage',
+                        'score' => 0.5,
+                    ])
+                ),
+            ]
+        );
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $this->_getClientMock($response),
+        ]);
+        $this->assertTrue($googleRecaptchaService->verify());
+    }
 }

@@ -1,5 +1,9 @@
 # Google Recaptcha Changelog
 
+## 2.0.2 - 2022-05-13
+### Fixed
+- Fix an exception that could occur in verify method if no actions parameters were saved (merged from 1.1.1)
+
 ## 2.0.1 - 2022-05-09
 
 ### Fixed
@@ -9,6 +13,10 @@
 
 ### Added
 - Added Craft 4 compatibility.
+
+## 1.1.1 - 2022-05-13
+### Fixed
+- Fix an exception that could occur in verify method if no actions parameters were saved.
 
 ## 1.1.0 - 2022-03-07
 ### Added
