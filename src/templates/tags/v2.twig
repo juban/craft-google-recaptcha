@@ -13,4 +13,4 @@
     {{ callbackName }}();
     {% endif %}
 </script>
-<script {% if nonce ?? null %}nonce="{{ nonce }}"{% endif %} src="https://www.google.com/recaptcha/api.js?onload={{ callbackName }}&render=explicit&hl={{ craft.app.sites.currentSite.language }}" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?onload={{ callbackName }}&render=explicit&hl={{ craft.app.sites.currentSite.language }}" async defer></script>

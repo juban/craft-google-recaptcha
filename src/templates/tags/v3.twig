@@ -1,5 +1,5 @@
 {{ hiddenInput|raw }}
-<script src="https://www.google.com/recaptcha/api.js?render={{ siteKey }}" {% if nonce ?? null %}nonce="{{ nonce }}"{% endif %}></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{ siteKey }}"></script>
 <script {% if nonce ?? null %}nonce="{{ nonce }}"{% endif %}>
     grecaptcha.ready(function() {
         grecaptcha.execute("{{ siteKey }}", {
