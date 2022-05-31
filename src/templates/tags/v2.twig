@@ -1,5 +1,5 @@
 {{ div|raw }}
-<script type="text/javascript">
+<script type="text/javascript" {% if nonce ?? null %}nonce="{{ nonce }}"{% endif %}>
     var {{ callbackName }} = function() {
         var widgetId = grecaptcha.render("{{ id }}", {
             sitekey: "{{ siteKey }}",
@@ -13,4 +13,4 @@
     {{ callbackName }}();
     {% endif %}
 </script>
-<script src="https://www.google.com/recaptcha/api.js?onload={{ callbackName }}&render=explicit&hl={{ craft.app.sites.currentSite.language }}" async defer></script>
+<script {% if nonce ?? null %}nonce="{{ nonce }}"{% endif %} src="https://www.google.com/recaptcha/api.js?onload={{ callbackName }}&render=explicit&hl={{ craft.app.sites.currentSite.language }}" async defer></script>

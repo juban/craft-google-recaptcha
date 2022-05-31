@@ -88,6 +88,7 @@ class GoogleRecaptchaVariable
             'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id]))
                 . Html::hiddenInput('g-recaptcha-action', Craft::$app->getSecurity()->hashData($action)),
             'siteKey' => $siteKey,
+            'nonce' => $options['nonce'],
         ], View::TEMPLATE_MODE_CP);
     }
 
@@ -116,6 +117,7 @@ class GoogleRecaptchaVariable
             'theme' => $theme,
             'badge' => $badge,
             'instantRender' => $instantRender,
+            'nonce' => $options['nonce'],
         ], View::TEMPLATE_MODE_CP);
     }
 }
