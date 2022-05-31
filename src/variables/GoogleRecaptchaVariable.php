@@ -59,6 +59,7 @@ class GoogleRecaptchaVariable
 
         $siteKey = App::parseEnv($settings->siteKey);
         $nonce = $options['nonce'] ?? null;
+        ArrayHelper::remove($options, 'nonce');
         if ((int)App::parseEnv($settings->version) === 3) {
             $action = $options['action'] ?? $settings->actionName;
             ArrayHelper::remove($options, 'action');
