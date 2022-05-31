@@ -58,12 +58,13 @@ class GoogleRecaptchaVariable
         ArrayHelper::remove($options, 'id');
 
         $siteKey = App::parseEnv($settings->siteKey);
+        $nonce = $options['nonce'] ?? null;
         if ((int)App::parseEnv($settings->version) === 3) {
             $action = $options['action'] ?? $settings->actionName;
             ArrayHelper::remove($options, 'action');
-            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $action);
+            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $action, $nonce);
         } else {
-            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender);
+            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender, $nonce);
         }
 
         return Template::raw($recaptchaTag);
@@ -80,7 +81,7 @@ class GoogleRecaptchaVariable
      * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      */
-    private static function _getV3Tag(string $id, string $siteKey, array $options, string $action): string
+    private static function _getV3Tag(string $id, string $siteKey, array $options, string $action, string $nonce): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
             'id' => $id,
@@ -88,7 +89,7 @@ class GoogleRecaptchaVariable
             'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id]))
                 . Html::hiddenInput('g-recaptcha-action', Craft::$app->getSecurity()->hashData($action)),
             'siteKey' => $siteKey,
-            'nonce' => $options['nonce'],
+            'nonce' => $nonce,
         ], View::TEMPLATE_MODE_CP);
     }
 
@@ -106,7 +107,7 @@ class GoogleRecaptchaVariable
      * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      */
-    private static function _getV2Tag(string $id, string $siteKey, array $options, string $size, string $theme, string $badge, bool $instantRender): string
+    private static function _getV2Tag(string $id, string $siteKey, array $options, string $size, string $theme, string $badge, bool $instantRender, $nonce): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v2', [
             'callbackName' => StringHelper::camelCase($id),
@@ -117,7 +118,7 @@ class GoogleRecaptchaVariable
             'theme' => $theme,
             'badge' => $badge,
             'instantRender' => $instantRender,
-            'nonce' => $options['nonce'],
+            'nonce' => $nonce,
         ], View::TEMPLATE_MODE_CP);
     }
 }
