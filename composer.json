@@ -1,8 +1,8 @@
 {
-  "name": "simplonprod/craft-google-recaptcha",
+  "name": "juban/craft-google-recaptcha",
   "description": "Google reCAPTCHA for Craft CMS",
   "type": "craft-plugin",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "keywords": [
     "craft",
     "cms",
@@ -11,14 +11,14 @@
     "google recaptcha"
   ],
   "support": {
-    "docs": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
-    "issues": "https://github.com/Simplon-Prod/craft-google-recaptcha/issues"
+    "docs": "https://github.com/juban/craft-google-recaptcha/blob/master/README.md",
+    "issues": "https://github.com/juban/craft-google-recaptcha/issues"
   },
   "license": "MIT",
   "authors": [
     {
-      "name": "Simplon.Prod",
-      "homepage": "https://www.simplonprod.co"
+      "name": "juban",
+      "homepage": "https://github.com/juban"
     }
   ],
   "require": {
@@ -36,20 +36,20 @@
   },
   "autoload": {
     "psr-4": {
-      "simplonprod\\googlerecaptcha\\": "src/"
+      "juban\\googlerecaptcha\\": "src/"
     }
   },
   "extra": {
     "name": "Google reCAPTCHA",
     "handle": "google-recaptcha",
-    "developer": "Simplon.Prod",
-    "developerUrl": "https://www.simplonprod.co",
-    "documentationUrl": "https://github.com/Simplon-Prod/craft-google-recaptcha/blob/master/README.md",
-    "changelogUrl": "https://raw.githubusercontent.com/Simplon-Prod/craft-google-recaptcha/master/CHANGELOG.md",
+    "developer": "juban",
+    "developerUrl": "https://github.com/juban",
+    "documentationUrl": "https://github.com/juban/craft-google-recaptcha/blob/master/README.md",
+    "changelogUrl": "https://raw.githubusercontent.com/juban/craft-google-recaptcha/master/CHANGELOG.md",
     "components": {
-      "recaptcha": "simplonprod\\googlerecaptcha\\services\\Recaptcha"
+      "recaptcha": "juban\\googlerecaptcha\\services\\Recaptcha"
     },
-    "class": "simplonprod\\googlerecaptcha\\GoogleRecaptcha"
+    "class": "juban\\googlerecaptcha\\GoogleRecaptcha"
   },
   "config": {
     "allow-plugins": {

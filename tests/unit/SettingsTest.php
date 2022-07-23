@@ -40,7 +40,7 @@ class SettingsTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
-        $this->settings = new \simplonprod\googlerecaptcha\models\Settings();
+        $this->settings = new \juban\googlerecaptcha\models\Settings();
         $this->settings->secretKey = 'secretkey';
         $this->settings->siteKey = 'sitekey';
     }

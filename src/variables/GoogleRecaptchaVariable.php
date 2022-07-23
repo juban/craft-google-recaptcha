@@ -4,11 +4,11 @@
  *
  * Google Recaptcha for Craft CMS
  *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
+ * @link      https://github.com/juban
+ * @copyright Copyright (c) 2022 juban
  */
 
-namespace simplonprod\googlerecaptcha\variables;
+namespace juban\googlerecaptcha\variables;
 
 use Craft;
 use craft\helpers\App;
@@ -17,7 +17,7 @@ use craft\helpers\Html;
 use craft\helpers\StringHelper;
 use craft\helpers\Template;
 use craft\web\View;
-use simplonprod\googlerecaptcha\GoogleRecaptcha;
+use juban\googlerecaptcha\GoogleRecaptcha;
 use Twig\Markup;
 
 /**
@@ -28,7 +28,7 @@ use Twig\Markup;
  *
  * https://craftcms.com/docs/plugins/variables
  *
- * @author    Simplon.Prod
+ * @author    juban
  * @package   GoogleRecaptcha
  * @since     1.0.0
  */

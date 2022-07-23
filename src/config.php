@@ -3,9 +3,6 @@
  * Google Recaptcha plugin for Craft CMS 3.x
  *
  * Google Recaptcha for Craft CMS
- *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
  */
 
 /**

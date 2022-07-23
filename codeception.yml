@@ -32,7 +32,7 @@ modules:
       migrations: []
       plugins:
         google-recaptcha:
-          class: '\simplonprod\googlerecaptcha\GoogleRecaptcha'
+          class: '\juban\googlerecaptcha\GoogleRecaptcha'
           handle: google-recaptcha
       cleanup: false
       transaction: true

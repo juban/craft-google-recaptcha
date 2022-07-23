@@ -3,12 +3,9 @@
  * Google Recaptcha plugin for Craft CMS 3.x
  *
  * Google Recaptcha for Craft CMS
- *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
  */
 
-namespace simplonprod\googlerecaptcha\models;
+namespace juban\googlerecaptcha\models;
 
 use Craft;
 use craft\base\Model;
@@ -26,7 +23,7 @@ use yii\base\DynamicModel;
  *
  * https://craftcms.com/docs/plugins/models
  *
- * @author    Simplon.Prod
+ * @author    juban
  * @package   GoogleRecaptcha
  * @since     1.0.0
  */

@@ -3,12 +3,9 @@
  * Google Recaptcha plugin for Craft CMS 3.x
  *
  * Google Recaptcha for Craft CMS
- *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
  */
 
-namespace simplonprod\googlerecaptcha\services;
+namespace juban\googlerecaptcha\services;
 
 use Craft;
 use craft\base\Component;
@@ -16,7 +13,7 @@ use craft\helpers\App;
 use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
-use simplonprod\googlerecaptcha\GoogleRecaptcha;
+use juban\googlerecaptcha\GoogleRecaptcha;
 use yii\helpers\VarDumper;
 use yii\web\ForbiddenHttpException;
 
@@ -25,7 +22,7 @@ use yii\web\ForbiddenHttpException;
  *
  * https://craftcms.com/docs/plugins/services
  *
- * @author    Simplon.Prod
+ * @author    juban
  * @package   GoogleRecaptcha
  * @since     1.0.0
  *

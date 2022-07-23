@@ -12,7 +12,7 @@ To use the plugin, you will need to get an API site key and secret key which you
 
 ## Installation
 
-1. Install with composer via `composer require simplonprod/craft-google-recaptcha` from your project directory or from the Plugin Store section of the Control Panel.
+1. Install with composer via `composer require juban/craft-google-recaptcha` from your project directory or from the Plugin Store section of the Control Panel.
 2. Install the plugin in the Craft Control Panel under Settings → Plugins, or from the command line via `./craft plugin/install google-recaptcha`.
 
 
@@ -148,6 +148,3 @@ Event::on(Submission::class, Submission::EVENT_AFTER_VALIDATE, function(Event $e
 ```
 
 ---
-
-<small>Created by [Simplon.Prod](https://www.simplonprod.co/).</small>
-
