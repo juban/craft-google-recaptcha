@@ -1,5 +1,5 @@
 {
-  "name": "juban/craft-google-recaptcha",
+  "name": "jub/craft-google-recaptcha",
   "description": "Google reCAPTCHA for Craft CMS",
   "type": "craft-plugin",
   "version": "2.1.0",
