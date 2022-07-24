@@ -2,10 +2,10 @@
 
 ## 2.1.0 - 2022-07-23
 
-> {note} The plugin’s package name has changed to `juban/craft-google-recaptcha`. You can update the plugin by running `composer require juban/craft-google-recaptcha && composer remove simplonprod/craft-google-recaptcha`.
+> {note} The plugin’s package name has changed to `jub/craft-google-recaptcha`. You can update the plugin by running `composer require jub/craft-google-recaptcha && composer remove simplonprod/craft-google-recaptcha`.
 
 # Changed
-- Migrate plugin to `juban/craft-google-recaptcha`
+- Migrate plugin to `jub/craft-google-recaptcha`
 - Updated plugin logo
 
 
