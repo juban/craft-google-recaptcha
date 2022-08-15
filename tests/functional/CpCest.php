@@ -86,7 +86,7 @@ class CpCest
             ],
         ]);
         $I->seeResponseCodeIs(200);
-        $I->see('Plugin settings saved');
+        $I->seeCurrentUrlMatches('/admin\/settings$/');
         $I->seeInDatabase('projectconfig', ['path' => 'plugins.google-recaptcha.settings.version', 'value' => '"3"']);
     }
 }
