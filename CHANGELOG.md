@@ -1,5 +1,10 @@
 # Google Recaptcha Changelog
 
+## 2.2.0 - 2022-08-15
+
+### Added
+- Ability to set script tags extra attributes (original request by @jcdarwin for CSP compliance)
+
 ## 2.1.0 - 2022-07-23
 
 > {note} The plugin’s package name has changed to `jub/craft-google-recaptcha`. You can update the plugin by running `composer require jub/craft-google-recaptcha && composer remove simplonprod/craft-google-recaptcha`.
