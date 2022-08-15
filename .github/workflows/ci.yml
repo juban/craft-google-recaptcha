@@ -23,7 +23,7 @@ jobs:
       php_version: '8.0'
   codecept:
     name: Codeception
-    needs: [ ecs, prettier, phpstan ]
+    needs: [ ecs, phpstan ]
     uses: juban/.github/.github/workflows/codecept.yml@main
     with:
       php_versions: '8.0'
