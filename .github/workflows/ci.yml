@@ -13,17 +13,17 @@ concurrency:
 jobs:
   ecs:
     name: ECS
-    uses: juban/.github/.github/workflows/ecs.yml
+    uses: juban/.github/.github/workflows/ecs.yml@main
     with:
       php_version: '8.0'
   phpstan:
     name: PHPStan
-    uses: juban/.github/.github/workflows/phpstan.yml
+    uses: juban/.github/.github/workflows/phpstan.yml@main
     with:
       php_version: '8.0'
   codecept:
     name: Codeception
     needs: [ ecs, prettier, phpstan ]
-    uses: juban/.github/.github/workflows/codecept.yml
+    uses: juban/.github/.github/workflows/codecept.yml@main
     with:
       php_versions: '8.0'
