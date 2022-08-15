@@ -29,5 +29,8 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction --no-suggest
 
+      - name: Prepare .env file
+        run: cp tests/example-env tests/.env
+
       - name: Run tests
         run: php vendor/bin/codecept run
