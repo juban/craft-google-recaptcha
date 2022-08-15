@@ -58,12 +58,16 @@ class GoogleRecaptchaVariable
         ArrayHelper::remove($options, 'id');
 
         $siteKey = App::parseEnv($settings->siteKey);
+
+        $scriptAttributes = isset($options['scriptOptions']) ? Html::renderTagAttributes($options['scriptOptions']) : '';
+        ArrayHelper::remove($options, 'scriptOptions');
+
         if ((int)App::parseEnv($settings->version) === 3) {
             $action = $options['action'] ?? $settings->actionName;
             ArrayHelper::remove($options, 'action');
-            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $action);
+            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $scriptAttributes, $action);
         } else {
-            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender);
+            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, $scriptAttributes, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender);
         }
 
         return Template::raw($recaptchaTag);
@@ -80,13 +84,14 @@ class GoogleRecaptchaVariable
      * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      */
-    private static function _getV3Tag(string $id, string $siteKey, array $options, string $action): string
+    private static function _getV3Tag(string $id, string $siteKey, array $options, string $scriptAttributes, string $action): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
             'id' => $id,
             'action' => $action,
             'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id]))
                 . Html::hiddenInput('g-recaptcha-action', Craft::$app->getSecurity()->hashData($action)),
+            'scriptAttributes' => $scriptAttributes,
             'siteKey' => $siteKey,
         ], View::TEMPLATE_MODE_CP);
     }
@@ -105,12 +110,13 @@ class GoogleRecaptchaVariable
      * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      */
-    private static function _getV2Tag(string $id, string $siteKey, array $options, string $size, string $theme, string $badge, bool $instantRender): string
+    private static function _getV2Tag(string $id, string $siteKey, array $options, string $scriptAttributes, string $size, string $theme, string $badge, bool $instantRender): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v2', [
             'callbackName' => StringHelper::camelCase($id),
             'id' => $id,
             'div' => Html::tag('div', '', ArrayHelper::merge($options, ['id' => $id])),
+            'scriptAttributes' => $scriptAttributes,
             'siteKey' => $siteKey,
             'size' => $size,
             'theme' => $theme,
