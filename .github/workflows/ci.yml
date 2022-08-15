@@ -6,6 +6,11 @@ on:
 
 name: Codeception Tests
 
+env:
+  DB_DATABASE: db
+  DB_USER: db
+  DB_PASSWORD: db
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,6 +27,11 @@ jobs:
           ini-values: memory_limit=-1, date.timezone='UTC'
           coverage: xdebug
           tools: composer:v2
+
+      - name: Setup MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate
