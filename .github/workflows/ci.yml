@@ -26,4 +26,4 @@ jobs:
     needs: [ ecs, phpstan ]
     uses: juban/.github/.github/workflows/codecept.yml@main
     with:
-      php_versions: '8.0'
+      php_version: '8.0'
