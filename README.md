@@ -1,6 +1,12 @@
 # Google reCAPTCHA plugin for Craft CMS 4
 
+[![Stable Version](https://img.shields.io/packagist/v/jub/craft-google-recaptcha?label=stable)]((https://packagist.org/packages/putyourlightson/craft-campaign))
+[![Total Downloads](https://img.shields.io/packagist/dt/jub/craft-google-recaptcha)](https://packagist.org/packages/putyourlightson/craft-campaign)
+![Tests status](https://github.com/juban/craft-google-recaptcha/actions/workflows/ci.yml/badge.svg?branch=master)
+
 ![](logo.png)
+
+
 
 Google reCAPTCHA for Craft CMS enables to render and validate the reCAPTCHA widget. It is compatible with both API v2 and v3, including checkbox badge and invisible flavors.
 
