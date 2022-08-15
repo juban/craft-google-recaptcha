@@ -75,19 +75,31 @@ For example, to provide a container id, you can do:
 
 
 ```twig
-{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }) }}
+{{ craft.googleRecaptcha.render({id: 'recaptcha-widget'}) }}
 ```
 
-For v3 API, an action parameter can also be provided as follow:
+For v3 API, an action property can also be provided as follow:
 
 ```twig
-{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget', action: 'some_action_name' }) }}
+{{ craft.googleRecaptcha.render({id: 'recaptcha-widget', action: 'some_action_name'}) }}
 ```
 
 In that case, the score threshold to be used for that action can be defined in the "Actions Settings" part of the plugin control panel.
 
 > 💡 For v2 API, you can provide a second boolean argument to the render method to trigger the instant rendering of the widget (ie. `{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}`). 
 > This is useful if you are working with views loaded through Ajax or [Sprig](https://plugins.craftcms.com/sprig) calls and you need to refresh the widget.
+
+#### Setting scripts extra attributes
+
+In the first render parameter, `scriptOptions` special property can be used to add extra attributes to the generated scripts tags.
+
+For example, to support Content Security Policy (CSP), assuming you are using the [Sherlock](https://plugins.craftcms.com/sherlock) security plugin, you could do the following:
+
+```twig
+{% set nonce = craft.sherlock.getNonce() %}
+{{ craft.googleRecaptcha.render({scriptOptions: {'nonce': nonce}}) }}
+```
+
 
 ### Verify users submissions
 
