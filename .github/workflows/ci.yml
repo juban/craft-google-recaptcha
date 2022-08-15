@@ -1,76 +1,29 @@
+name: Tests
 on:
   workflow_dispatch:
   pull_request:
-    branches-ignore: gh-pages
   push:
-    branches-ignore: gh-pages
-
-name: Tests
+    branches:
+      - master
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  DB_DATABASE: db
-  DB_USER: root
-  DB_PASSWORD: root
-  PHP_EXTENSIONS: ctype,curl,dom,iconv,imagick,intl,json,mbstring,openssl,pcre,pdo,reflection,spl,zip
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup cache environment
-        id: extcache
-        uses: shivammathur/cache-extensions@257e3c93fb0a7d302495902b976b1d0245123b59
-        with:
-          php-version: '8.0'
-          extensions: ${{ env.PHP_EXTENSIONS }}
-          key: extension-cache # change to clear the extension cache.
-
-      - name: Cache extensions
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.extcache.outputs.dir }}
-          key: ${{ steps.extcache.outputs.key }}
-          restore-keys: ${{ steps.extcache.outputs.key }}
-
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-          extensions: ${{ env.PHP_EXTENSIONS }}
-          ini-values: post_max_size=256M, max_execution_time=180, memory_limit=512M
-          coverage: xdebug
-          tools: composer:v2
-
-      - name: Setup MySQL
-        run: |
-          sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
-
-      - name: Cache Composer dependencies
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Install dependencies
-        run: composer install --no-ansi --no-progress --no-interaction --no-suggest
-
-      - name: Prepare .env file
-        run: cp tests/example-env tests/.env
-
-      - name: Run tests
-        run: php vendor/bin/codecept run unit,functional --fail-fast --coverage-xml coverage.xml
+  ecs:
+    name: ECS
+    uses: juban/.github/.github/workflows/ecs.yml
+    with:
+      php_version: '8.0'
+  phpstan:
+    name: PHPStan
+    uses: juban/.github/.github/workflows/phpstan.yml
+    with:
+      php_version: '8.0'
+  codecept:
+    name: Codeception
+    needs: [ ecs, prettier, phpstan ]
+    uses: juban/.github/.github/workflows/codecept.yml
+    with:
+      php_versions: '8.0'
