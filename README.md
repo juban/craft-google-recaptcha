@@ -1,7 +1,7 @@
 # Google reCAPTCHA plugin for Craft CMS 4
 
-[![Stable Version](https://img.shields.io/packagist/v/jub/craft-google-recaptcha?label=stable)]((https://packagist.org/packages/putyourlightson/craft-campaign))
-[![Total Downloads](https://img.shields.io/packagist/dt/jub/craft-google-recaptcha)](https://packagist.org/packages/putyourlightson/craft-campaign)
+[![Stable Version](https://img.shields.io/packagist/v/jub/craft-google-recaptcha?label=stable)]((https://packagist.org/packages/jub/craft-google-recaptcha))
+[![Total Downloads](https://img.shields.io/packagist/dt/jub/craft-google-recaptcha)](https://packagist.org/packages/jub/craft-google-recaptcha)
 ![Tests status](https://github.com/juban/craft-google-recaptcha/actions/workflows/ci.yml/badge.svg?branch=master)
 
 ![](logo.png)
