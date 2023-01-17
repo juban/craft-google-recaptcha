@@ -13,6 +13,7 @@ use craft\helpers\App;
 use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
+use juban\googlerecaptcha\events\SkipRecaptchaEvent;
 use juban\googlerecaptcha\GoogleRecaptcha;
 use yii\helpers\VarDumper;
 use yii\web\ForbiddenHttpException;
@@ -30,11 +31,21 @@ use yii\web\ForbiddenHttpException;
  */
 class Recaptcha extends Component
 {
+
+    const EVENT_SKIP_RECAPTCHA_VERIFICATION = 'skipRecaptchaVerification';
+
     // Public Methods
     // =========================================================================
 
     public function verify(): bool
     {
+        // Event
+        $skipRecaptchaEvent = new SkipRecaptchaEvent();
+        $this->trigger(self::EVENT_SKIP_RECAPTCHA_VERIFICATION, $skipRecaptchaEvent);
+        if ($skipRecaptchaEvent->skipVerification === true) {
+            return true;
+        }
+
         $request = Craft::$app->getRequest();
         $recaptchaResponse = $request->getParam('g-recaptcha-response');
         if ($recaptchaResponse === null) {
