@@ -1,5 +1,10 @@
 # Google Recaptcha Changelog
 
+## 2.3.0 - 2023-01-22
+
+### Added
+- `BeforeRecaptchaVerifyEvent` event to bypass or cancel the reCAPTCHA verification (original request by @creode-dev)
+
 ## 2.2.0 - 2022-08-15
 
 ### Added
