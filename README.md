@@ -169,6 +169,6 @@ Event::on(Submission::class, Submission::EVENT_AFTER_VALIDATE, function(Event $e
 
 * The `\juban\googlerecaptcha\events\BeforeRecaptchaVerifyEvent` event is triggered just before a reCAPTCHA verification is performed. You can use that event to:
 	* **Bypass the verification** by setting the `skipVerification` event property to `true`. In that case, verification will be considered as successful.
-	* **Cancel the verification** by setting the `isValid` event property to `false`. In that case, verification will be considered as failed).
+	* **Cancel the verification** by setting the `isValid` event property to `false`. In that case, verification will be considered as failed.
 
 ---
