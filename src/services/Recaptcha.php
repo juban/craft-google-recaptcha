@@ -13,7 +13,7 @@ use craft\helpers\App;
 use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
-use juban\googlerecaptcha\events\SkipRecaptchaEvent;
+use juban\googlerecaptcha\events\BeforeRecaptchaVerifyEvent;
 use juban\googlerecaptcha\GoogleRecaptcha;
 use yii\helpers\VarDumper;
 use yii\web\ForbiddenHttpException;
@@ -31,19 +31,29 @@ use yii\web\ForbiddenHttpException;
  */
 class Recaptcha extends Component
 {
-
-    const EVENT_SKIP_RECAPTCHA_VERIFICATION = 'skipRecaptchaVerification';
+    /**
+     * @event EVENT_BEFORE_RECAPTCHA_VERIFY The event that is triggered before a reCAPTCHA verification is performed.
+     *
+     * You may set [[\juban\googlerecaptcha\events\BeforeRecaptchaVerifyEvent::$isValid]] to `false` to force verification failure.
+     * You may set [[\juban\googlerecaptcha\events\BeforeRecaptchaVerifyEvent::$skipVerification]] to `true` to skip verification in which case it will be considered as successful.
+     */
+    public const EVENT_BEFORE_RECAPTCHA_VERIFY = 'beforeRecaptchaVerify';
 
     // Public Methods
     // =========================================================================
 
     public function verify(): bool
     {
-        // Event
-        $skipRecaptchaEvent = new SkipRecaptchaEvent();
-        $this->trigger(self::EVENT_SKIP_RECAPTCHA_VERIFICATION, $skipRecaptchaEvent);
-        if ($skipRecaptchaEvent->skipVerification === true) {
+        // Trigger before verification event
+        $beforeRecaptchaEvent = new BeforeRecaptchaVerifyEvent();
+        $this->trigger(self::EVENT_BEFORE_RECAPTCHA_VERIFY, $beforeRecaptchaEvent);
+
+        if ($beforeRecaptchaEvent->skipVerification === true) {
             return true;
+        }
+
+        if ($beforeRecaptchaEvent->isValid === false) {
+            return false;
         }
 
         $request = Craft::$app->getRequest();
