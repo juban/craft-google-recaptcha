@@ -2,7 +2,7 @@
   "name": "jub/craft-google-recaptcha",
   "description": "Google reCAPTCHA for Craft CMS",
   "type": "craft-plugin",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "keywords": [
     "craft",
     "cms",
@@ -55,6 +55,10 @@
     "allow-plugins": {
       "yiisoft/yii2-composer": true,
       "craftcms/plugin-installer": true
+    },
+    "preferred-install": {
+      "craftcms/cms": "source",
+      "*" : "dist"
     }
   },
   "minimum-stability": "dev",
