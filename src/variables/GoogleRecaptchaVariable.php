@@ -93,7 +93,6 @@ class GoogleRecaptchaVariable
                 . Html::hiddenInput('g-recaptcha-action', Craft::$app->getSecurity()->hashData($action)),
             'scriptAttributes' => $scriptAttributes,
             'siteKey' => $siteKey,
-            'nonce' => $nonce,
         ], View::TEMPLATE_MODE_CP);
     }
 
@@ -123,7 +122,6 @@ class GoogleRecaptchaVariable
             'theme' => $theme,
             'badge' => $badge,
             'instantRender' => $instantRender,
-            'nonce' => $nonce,
         ], View::TEMPLATE_MODE_CP);
     }
 }
