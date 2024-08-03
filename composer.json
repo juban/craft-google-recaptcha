@@ -2,7 +2,7 @@
   "name": "jub/craft-google-recaptcha",
   "description": "Google reCAPTCHA for Craft CMS",
   "type": "craft-plugin",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "keywords": [
     "craft",
     "cms",
@@ -27,7 +27,7 @@
   },
   "require-dev": {
     "codeception/codeception": "^5.0.0",
-    "vlucas/phpdotenv": "^3.0",
+    "vlucas/phpdotenv": "^5.0",
     "codeception/module-yii2": "^1.0.0",
     "codeception/module-asserts": "^3.0.0",
     "codeception/module-db": "^3.1",
