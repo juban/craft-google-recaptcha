@@ -4,18 +4,18 @@
  *
  * Craft CMS Newsletter plugin
  *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
+ * @link      https://github.com/juban
+ * @copyright Copyright (c) 2022 juban
  */
 
-namespace simplonprod\googlerecaptchatests\unit;
+namespace juban\googlerecaptchatests\unit;
 
 use Craft;
-use simplonprod\googlerecaptcha\GoogleRecaptcha;
+use juban\googlerecaptcha\GoogleRecaptcha;
 use UnitTester;
 
 /**
- * @author    Simplon.Prod
+ * @author    juban
  * @package   Google reCAPTCHA
  * @since     1.0.0
  */

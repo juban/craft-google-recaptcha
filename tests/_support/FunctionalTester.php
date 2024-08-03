@@ -4,8 +4,8 @@
  *
  * Google Recaptcha for Craft CMS
  *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
+ * @link      https://github.com/juban
+ * @copyright Copyright (c) 2022 juban
  */
 
 use Codeception\Actor;

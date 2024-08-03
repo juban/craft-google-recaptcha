@@ -4,27 +4,30 @@
  *
  * Craft CMS Newsletter plugin
  *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
+ * @link      https://github.com/juban
+ * @copyright Copyright (c) 2022 juban
  */
 
-namespace simplonprod\googlerecaptchatests\unit;
+namespace juban\googlerecaptchatests\unit;
 
 use Craft;
+use craft\events\CancelableEvent;
 use craft\helpers\Json;
+use craft\test\EventItem;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use juban\googlerecaptcha\GoogleRecaptcha;
+use juban\googlerecaptcha\services\Recaptcha;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\RequestInterface;
-use simplonprod\googlerecaptcha\GoogleRecaptcha;
-use simplonprod\googlerecaptcha\services\Recaptcha;
 use UnitTester;
+use yii\base\Event;
 use yii\web\ForbiddenHttpException;
 
 /**
- * @author    Simplon.Prod
+ * @author    juban
  * @package   Google reCAPTCHA
  * @since     1.0.0
  */
@@ -77,6 +80,7 @@ class ServicesTest extends BaseUnitTest
                 ],
             ])
             ->willReturn($response);
+
         return $clientMock;
     }
 
@@ -206,18 +210,12 @@ class ServicesTest extends BaseUnitTest
 
     public function testVerifyWithConnectException(): void
     {
-        $response = $this->make(Response::class,
-            [
-                'getStatusCode' => 200,
-                'getBody' => Json::encode([
-                    'success' => false,
-                ]),
-            ]);
         $clientMock = $this->createMock(Client::class);
         $clientMock
             ->expects($this->once())
             ->method('request')
-            ->will($this->throwException(new ConnectException('Something went wrong', $this->makeEmpty(RequestInterface::class))));
+            ->will($this->throwException(new ConnectException('Something went wrong',
+                $this->makeEmpty(RequestInterface::class))));
         $googleRecaptchaService = $this->make(Recaptcha::class, [
             'getRecaptchaClient' => $clientMock,
         ]);
@@ -254,5 +252,95 @@ class ServicesTest extends BaseUnitTest
             'getRecaptchaClient' => $this->_getClientMock($response),
         ]);
         $this->assertTrue($googleRecaptchaService->verify());
+    }
+
+    public function testBeforeRecaptchaVerifyEvent()
+    {
+        $clientMock = $this->createMock(Client::class);
+        $clientMock
+            ->expects($this->once())
+            ->method('request');
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $clientMock,
+        ]);
+        $this->tester->expectEvent(Recaptcha::class, Recaptcha::EVENT_BEFORE_RECAPTCHA_VERIFY,
+            function() use ($googleRecaptchaService) {
+                $googleRecaptchaService->verify();
+            }, CancelableEvent::class, $this->tester->createEventItems([
+                [
+                    'eventPropName' => 'sender',
+                    'type' => EventItem::TYPE_CLASS,
+                    'desiredClass' => $googleRecaptchaService::class,
+                ],
+                [
+                    'eventPropName' => 'isValid',
+                    'type' => EventItem::TYPE_OTHERVALUE,
+                    'desiredValue' => [true],
+                ],
+            ]));
+    }
+
+    public function testCanceledBeforeRecaptchaVerifyEvent()
+    {
+        Event::on(
+            Recaptcha::class,
+            Recaptcha::EVENT_BEFORE_RECAPTCHA_VERIFY,
+            function(Event $event) {
+                $event->isValid = false;
+            });
+        $clientMock = $this->createMock(Client::class);
+        $clientMock
+            ->expects($this->never())
+            ->method('request');
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $clientMock,
+        ]);
+        $this->tester->expectEvent(Recaptcha::class, Recaptcha::EVENT_BEFORE_RECAPTCHA_VERIFY,
+            function() use ($googleRecaptchaService) {
+                $this->assertFalse($googleRecaptchaService->verify());
+            }, CancelableEvent::class, $this->tester->createEventItems([
+                [
+                    'eventPropName' => 'sender',
+                    'type' => EventItem::TYPE_CLASS,
+                    'desiredClass' => $googleRecaptchaService::class,
+                ],
+                [
+                    'eventPropName' => 'isValid',
+                    'type' => EventItem::TYPE_OTHERVALUE,
+                    'desiredValue' => [false],
+                ],
+            ]));
+    }
+
+    public function testSkippedBeforeRecaptchaVerifyEvent()
+    {
+        Event::on(
+            Recaptcha::class,
+            Recaptcha::EVENT_BEFORE_RECAPTCHA_VERIFY,
+            function(Event $event) {
+                $event->skipVerification = true;
+            });
+        $clientMock = $this->createMock(Client::class);
+        $clientMock
+            ->expects($this->never())
+            ->method('request');
+        $googleRecaptchaService = $this->make(Recaptcha::class, [
+            'getRecaptchaClient' => $clientMock,
+        ]);
+        $this->tester->expectEvent(Recaptcha::class, Recaptcha::EVENT_BEFORE_RECAPTCHA_VERIFY,
+            function() use ($googleRecaptchaService) {
+                $this->assertTrue($googleRecaptchaService->verify());
+            }, CancelableEvent::class, $this->tester->createEventItems([
+                [
+                    'eventPropName' => 'sender',
+                    'type' => EventItem::TYPE_CLASS,
+                    'desiredClass' => $googleRecaptchaService::class,
+                ],
+                [
+                    'eventPropName' => 'isValid',
+                    'type' => EventItem::TYPE_OTHERVALUE,
+                    'desiredValue' => [true],
+                ],
+            ]));
     }
 }

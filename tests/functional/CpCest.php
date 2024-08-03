@@ -1,11 +1,11 @@
 <?php
 
-namespace simplonprod\googlerecaptchatests\functional;
+namespace juban\googlerecaptchatests\functional;
 
 use Craft;
 use craft\elements\User;
 use FunctionalTester;
-use simplonprod\googlerecaptcha\GoogleRecaptcha;
+use juban\googlerecaptcha\GoogleRecaptcha;
 
 class CpCest
 {
@@ -86,7 +86,7 @@ class CpCest
             ],
         ]);
         $I->seeResponseCodeIs(200);
-        $I->see('Plugin settings saved');
+        $I->seeCurrentUrlMatches('/admin\/settings$/');
         $I->seeInDatabase('projectconfig', ['path' => 'plugins.google-recaptcha.settings.version', 'value' => '"3"']);
     }
 }

@@ -1,12 +1,6 @@
 <?php
-/**
- * Google Recaptcha plugin for Craft CMS 3.x
- *
- * @link      https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
- */
 
-namespace simplonprod\googlerecaptcha;
+namespace juban\googlerecaptcha;
 
 use Craft;
 use craft\base\Plugin;
@@ -14,13 +8,13 @@ use craft\events\PluginEvent;
 use craft\helpers\UrlHelper;
 use craft\services\Plugins;
 use craft\web\twig\variables\CraftVariable;
-use simplonprod\googlerecaptcha\models\Settings;
-use simplonprod\googlerecaptcha\services\Recaptcha as RecaptchaService;
-use simplonprod\googlerecaptcha\variables\GoogleRecaptchaVariable;
+use juban\googlerecaptcha\models\Settings;
+use juban\googlerecaptcha\services\Recaptcha as RecaptchaService;
+use juban\googlerecaptcha\variables\GoogleRecaptchaVariable;
 use yii\base\Event;
 
 /**
- * @author    Simplon.Prod
+ * @author    juban
  * @package   GoogleRecaptcha
  * @since     1.0.0
  *

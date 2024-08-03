@@ -1,6 +1,6 @@
 <?php
 
-namespace simplonprod\googlerecaptchatests\acceptance;
+namespace juban\googlerecaptchatests\acceptance;
 
 use FunctionalTester;
 
