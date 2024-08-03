@@ -2,7 +2,7 @@
   "name": "jub/craft-google-recaptcha",
   "description": "Google reCAPTCHA for Craft CMS",
   "type": "craft-plugin",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "keywords": [
     "craft",
     "cms",
@@ -33,7 +33,7 @@
     "codeception/module-db": "^3.1",
     "craftcms/ecs": "dev-main",
     "craftcms/phpstan": "dev-main",
-		"craftcms/rector": "dev-main"
+    "craftcms/rector": "dev-main"
   },
   "autoload": {
     "psr-4": {
