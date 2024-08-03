@@ -1,17 +1,13 @@
 <?php
-/**
- * @link https://www.simplonprod.co
- * @copyright Copyright (c) 2021 Simplon.Prod
- */
 
-namespace simplonprod\googlerecaptchatests\unit;
+namespace juban\googlerecaptchatests\unit;
 
 use Codeception\Test\Unit;
 
 /**
  * BaseUnitTest class
  *
- * @author albanjubert
+ * @author juban
  **/
 class BaseUnitTest extends Unit
 {
