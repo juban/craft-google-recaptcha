@@ -15,15 +15,15 @@ jobs:
     name: ECS
     uses: juban/.github/.github/workflows/ecs.yml@main
     with:
-      php_version: '8.0'
+      php_version: '8.2'
   phpstan:
     name: PHPStan
     uses: juban/.github/.github/workflows/phpstan.yml@main
     with:
-      php_version: '8.0'
+      php_version: '8.2'
   codecept:
     name: Codeception
     needs: [ ecs, phpstan ]
     uses: juban/.github/.github/workflows/codecept.yml@main
     with:
-      php_version: '8.0'
+      php_version: '8.2'
