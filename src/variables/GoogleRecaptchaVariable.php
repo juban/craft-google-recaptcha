@@ -18,7 +18,12 @@ use craft\helpers\StringHelper;
 use craft\helpers\Template;
 use craft\web\View;
 use juban\googlerecaptcha\GoogleRecaptcha;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Markup;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 
 /**
  * Google Recaptcha Variable
@@ -65,7 +70,9 @@ class GoogleRecaptchaVariable
         if ((int)App::parseEnv($settings->version) === 3) {
             $action = $options['action'] ?? $settings->actionName;
             ArrayHelper::remove($options, 'action');
-            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $scriptAttributes, $action);
+            $formId = $options['formId'] ?? null;
+            ArrayHelper::remove($options, 'formId');
+            $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $scriptAttributes, $action, $formId);
         } else {
             $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, $scriptAttributes, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender);
         }
@@ -77,18 +84,22 @@ class GoogleRecaptchaVariable
      * @param string $id
      * @param string $siteKey
      * @param array $options
+     * @param string $scriptAttributes
      * @param string $action
+     * @param string|null $formId
      * @return string
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \yii\base\Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Exception
+     * @throws InvalidConfigException
      */
-    private static function _getV3Tag(string $id, string $siteKey, array $options, string $scriptAttributes, string $action): string
+    private static function _getV3Tag(string $id, string $siteKey, array $options, string $scriptAttributes, string $action, string $formId = null): string
     {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
             'id' => $id,
             'action' => $action,
+            'formId' => $formId,
             'hiddenInput' => Html::hiddenInput('g-recaptcha-response', '', ArrayHelper::merge($options, ['id' => $id]))
                 . Html::hiddenInput('g-recaptcha-action', Craft::$app->getSecurity()->hashData($action)),
             'scriptAttributes' => $scriptAttributes,

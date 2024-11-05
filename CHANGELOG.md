@@ -1,5 +1,11 @@
 # Google Recaptcha Changelog
 
+## 3.0.0 - 2024-11-05
+
+### Added
+- Craft 5 support
+- v3 `formId` option in order to prevent `timeout-or-duplicate` errors if the form takes more than 2 minutes to be submited (#8)
+
 ## 2.3.0 - 2023-01-22
 
 ### Added

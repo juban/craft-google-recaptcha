@@ -6,21 +6,22 @@
 
 ![](logo.png)
 
-
-
-Google reCAPTCHA for Craft CMS enables to render and validate the reCAPTCHA widget. It is compatible with both API v2 and v3, including checkbox badge and invisible flavors.
+Google reCAPTCHA for Craft CMS enables to render and validate the reCAPTCHA widget. It is compatible with both API v2
+and v3, including checkbox badge and invisible flavors.
 
 ## Requirements
 
 This plugin requires Craft CMS 4.0.0 or later and PHP 8.0.2 or later.
 
-To use the plugin, you will need to get an API site key and secret key which you can configure [here](https://www.google.com/recaptcha/admin).
+To use the plugin, you will need to get an API site key and secret key which you can
+configure [here](https://www.google.com/recaptcha/admin).
 
 ## Installation
 
-1. Install with composer via `composer require jub/craft-google-recaptcha` from your project directory or from the Plugin Store section of the Control Panel.
-2. Install the plugin in the Craft Control Panel under Settings → Plugins, or from the command line via `./craft plugin/install google-recaptcha`.
-
+1. Install with composer via `composer require jub/craft-google-recaptcha` from your project directory or from the
+   Plugin Store section of the Control Panel.
+2. Install the plugin in the Craft Control Panel under Settings → Plugins, or from the command line via
+   `./craft plugin/install google-recaptcha`.
 
 ## Configuration
 
@@ -28,17 +29,20 @@ To use the plugin, you will need to get an API site key and secret key which you
 
 You can manage configuration setting through the Control Panel by going to Settings → Google reCAPTCHA
 
-* Provide the Site Key and the Secret Key obtained from [your reCAPTCHA account](https://www.google.com/recaptcha/admin).
+* Provide the Site Key and the Secret Key obtained
+  from [your reCAPTCHA account](https://www.google.com/recaptcha/admin).
 * Select the API version accordingly to the reCAPTCHA type you created the keys upon.
-* For v2 API, select the following parameters: 
-	* Size: Select the size of the reCAPTCHA widget. 
-	* Theme: Select the color theme of the reCAPTCHA widget.
-	* Badge: Select the position of the reCAPTCHA badge.
-* For v3 API: 
-	* Default Action: the default action name to be used during reCAPTCHA verification. Defaults to `homepage` if blank.
-	* Default Score Threshold : Minimum score between 0 and 1 to obtain in order for the end user to validate the reCAPTHCHA challenge (see [here](https://developers.google.com/recaptcha/docs/v3#interpreting_the_score) for help on interpreting the score)
-. Leave blank for no score checking. 	
-	* Actions: A score threshold can be defined per action here.
+* For v2 API, select the following parameters:
+    * Size: Select the size of the reCAPTCHA widget.
+    * Theme: Select the color theme of the reCAPTCHA widget.
+    * Badge: Select the position of the reCAPTCHA badge.
+* For v3 API:
+    * Default Action: the default action name to be used during reCAPTCHA verification. Defaults to `homepage` if blank.
+    * Default Score Threshold : Minimum score between 0 and 1 to obtain in order for the end user to validate the
+      reCAPTHCHA challenge (see [here](https://developers.google.com/recaptcha/docs/v3#interpreting_the_score) for help
+      on interpreting the score)
+      . Leave blank for no score checking.
+    * Actions: A score threshold can be defined per action here.
 
 ### Configuration file
 
@@ -76,36 +80,54 @@ You can integrate the Google reCAPTCHA widget in your Twig templates as follow:
 {{ craft.googleRecaptcha.render() }}
 ```
 
-The `render` method accept an optional parameter in which you can provide any HTML attributes to apply to the widget container (div for v2, hidden input for v3).  
+The `render` method accept an optional parameter in which you can provide any HTML attributes to apply to the widget
+container (div for v2, hidden input for v3).  
 For example, to provide a container id, you can do:
-
 
 ```twig
 {{ craft.googleRecaptcha.render({id: 'recaptcha-widget'}) }}
 ```
 
-For v3 API, an action property can also be provided as follow:
+> 💡 For v2 API, you can provide a second boolean argument to the render method to trigger the instant rendering of the
+> widget (ie. `{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}`).
+> This is useful if you are working with views loaded through Ajax or [Sprig](https://plugins.craftcms.com/sprig) calls
+> and you need to refresh the widget.
+
+#### v3 special options
+
+##### Action
+
+An `[action](https://developers.google.com/recaptcha/docs/v3?hl=fr#actions)` property can be provided as follow:
 
 ```twig
 {{ craft.googleRecaptcha.render({id: 'recaptcha-widget', action: 'some_action_name'}) }}
 ```
 
-In that case, the score threshold to be used for that action can be defined in the "Actions Settings" part of the plugin control panel.
+In that case, the score threshold to be used for that action can be defined in the "Actions Settings" part of the plugin
+control panel.
 
-> 💡 For v2 API, you can provide a second boolean argument to the render method to trigger the instant rendering of the widget (ie. `{{ craft.googleRecaptcha.render({ id: 'recaptcha-widget' }, true) }}`). 
-> This is useful if you are working with views loaded through Ajax or [Sprig](https://plugins.craftcms.com/sprig) calls and you need to refresh the widget.
+##### Form ID
+
+To prevent v3 reCAPTCHA 2 minutes timeout, you can provide à `formId` option to specify the protected form id:
+
+```twig
+{{ craft.googleRecaptcha.render({id: 'recaptcha-widget', formId: 'some-form-id'}) }}
+```
+
+In that case, reCAPTCHA will be executed upon submit event of the form.
 
 #### Setting scripts extra attributes
 
-In the first render parameter, `scriptOptions` special property can be used to add extra attributes to the generated scripts tags.
+In the first render parameter, `scriptOptions` special property can be used to add extra attributes to the generated
+scripts tags.
 
-For example, to support Content Security Policy (CSP), assuming you are using the [Sherlock](https://plugins.craftcms.com/sherlock) security plugin, you could do the following:
+For example, to support Content Security Policy (CSP), assuming you are using
+the [Sherlock](https://plugins.craftcms.com/sherlock) security plugin, you could do the following:
 
 ```twig
 {% set nonce = craft.sherlock.getNonce() %}
 {{ craft.googleRecaptcha.render({scriptOptions: {'nonce': nonce}}) }}
 ```
-
 
 ### Verify users submissions
 
@@ -115,7 +137,7 @@ To validate a user submission on server side, you can use the built-in method:
 GoogleRecaptcha::$plugin->recaptcha->verify();
 ```
 
-For example, in a module controller, you could do something like this:
+For example, in a [module](https://craftcms.com/docs/5.x/extend/module-guide.html) controller, you could do something like this:
 
 ```php
 public function actionSubmitForm() {
@@ -131,7 +153,9 @@ public function actionSubmitForm() {
 
 ### Verify Guest Entries submissions
 
-In order to add a reCAPTCHA verification when working with [Craft Guest Entries plugin](https://plugins.craftcms.com/guest-entries), you can do something like the following in a project module:
+In order to add a reCAPTCHA verification when working
+with [Craft Guest Entries plugin](https://plugins.craftcms.com/guest-entries), you can do something like the following
+in a project module:
 
 ```php
 Event::on(SaveController::class, SaveController::EVENT_BEFORE_SAVE_ENTRY, function (SaveEvent $e) {
@@ -150,7 +174,8 @@ Event::on(SaveController::class, SaveController::EVENT_BEFORE_SAVE_ENTRY, functi
 
 ### Verify Contact Form submissions
 
-In order to add a reCAPTCHA verification when working with [Contact Form](https://plugins.craftcms.com/contact-form), you can do something like the following in a project module:
+In order to add a reCAPTCHA verification when working with [Contact Form](https://plugins.craftcms.com/contact-form),
+you can do something like the following in a project module:
 
 ```php
 Event::on(Submission::class, Submission::EVENT_AFTER_VALIDATE, function(Event $e) {
@@ -167,8 +192,11 @@ Event::on(Submission::class, Submission::EVENT_AFTER_VALIDATE, function(Event $e
 
 ### Available events
 
-* The `\juban\googlerecaptcha\events\BeforeRecaptchaVerifyEvent` event is triggered just before a reCAPTCHA verification is performed. You can use that event to:
-	* **Bypass the verification** by setting the `skipVerification` event property to `true`. In that case, verification will be considered as successful.
-	* **Cancel the verification** by setting the `isValid` event property to `false`. In that case, verification will be considered as failed.
+* The `\juban\googlerecaptcha\events\BeforeRecaptchaVerifyEvent` event is triggered just before a reCAPTCHA verification
+  is performed. You can use that event to:
+    * **Bypass the verification** by setting the `skipVerification` event property to `true`. In that case, verification
+      will be considered as successful.
+    * **Cancel the verification** by setting the `isValid` event property to `false`. In that case, verification will be
+      considered as failed.
 
 ---

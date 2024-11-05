@@ -1,7 +1,7 @@
 actor: Tester
 paths:
   tests: tests
-  log: tests/_output
+  output: tests/_output
   data: tests/_data
   support: tests/_support
   envs: tests/_envs
@@ -34,7 +34,7 @@ modules:
         google-recaptcha:
           class: '\juban\googlerecaptcha\GoogleRecaptcha'
           handle: google-recaptcha
-      cleanup: false
+      cleanup: true
       transaction: true
       dbSetup: {clean: true, setupCraft: true}
       fullMock: false
