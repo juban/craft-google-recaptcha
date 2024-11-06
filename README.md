@@ -108,7 +108,8 @@ control panel.
 
 ##### Form ID
 
-To prevent v3 reCAPTCHA 2 minutes timeout, you can provide à `formId` option to specify the protected form id:
+To prevent the widget from expiring after 2 minutes, you should provide a `formId` option to specify the ID of the
+protected form:
 
 ```twig
 {{ craft.googleRecaptcha.render({id: 'recaptcha-widget', formId: 'some-form-id'}) }}
