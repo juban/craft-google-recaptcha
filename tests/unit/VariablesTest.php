@@ -225,4 +225,20 @@ class VariablesTest extends BaseUnitTest
         $this->assertEquals($matches[8], $matches[12]);
         $this->assertEquals($matches[2], $matches[3]);
     }
+
+    public function testGetVersion(): void
+    {
+        GoogleRecaptcha::$plugin->setSettings([
+            'version' => 3,
+        ]);
+        $this->assertEquals(3, $this->variable->getVersion());
+    }
+
+    public function testGetSiteKey(): void
+    {
+        GoogleRecaptcha::$plugin->setSettings([
+            'siteKey' => 'some-site-key',
+        ]);
+        $this->assertEquals('some-site-key', $this->variable->getSiteKey());
+    }
 }

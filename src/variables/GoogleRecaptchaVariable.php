@@ -64,17 +64,28 @@ class GoogleRecaptchaVariable
 
         $siteKey = App::parseEnv($settings->siteKey);
 
-        $scriptAttributes = isset($options['scriptOptions']) ? Html::renderTagAttributes($options['scriptOptions']) : '';
+        $scriptAttributes = isset($options['scriptOptions']) ? Html::renderTagAttributes(
+            $options['scriptOptions']
+        ) : '';
         ArrayHelper::remove($options, 'scriptOptions');
 
-        if ((int)App::parseEnv($settings->version) === 3) {
+        if ((int) App::parseEnv($settings->version) === 3) {
             $action = $options['action'] ?? $settings->actionName;
             ArrayHelper::remove($options, 'action');
             $formId = $options['formId'] ?? null;
             ArrayHelper::remove($options, 'formId');
             $recaptchaTag = self::_getV3Tag($id, $siteKey, $options, $scriptAttributes, $action, $formId);
         } else {
-            $recaptchaTag = self::_getV2Tag($id, $siteKey, $options, $scriptAttributes, App::parseEnv($settings->size), App::parseEnv($settings->theme), App::parseEnv($settings->badge), $instantRender);
+            $recaptchaTag = self::_getV2Tag(
+                $id,
+                $siteKey,
+                $options,
+                $scriptAttributes,
+                App::parseEnv($settings->size),
+                App::parseEnv($settings->theme),
+                App::parseEnv($settings->badge),
+                $instantRender
+            );
         }
 
         return Template::raw($recaptchaTag);
@@ -94,8 +105,14 @@ class GoogleRecaptchaVariable
      * @throws Exception
      * @throws InvalidConfigException
      */
-    private static function _getV3Tag(string $id, string $siteKey, array $options, string $scriptAttributes, string $action, string $formId = null): string
-    {
+    private static function _getV3Tag(
+        string $id,
+        string $siteKey,
+        array $options,
+        string $scriptAttributes,
+        string $action,
+        string $formId = null,
+    ): string {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v3', [
             'id' => $id,
             'action' => $action,
@@ -111,18 +128,27 @@ class GoogleRecaptchaVariable
      * @param string $id
      * @param string $siteKey
      * @param array $options
+     * @param string $scriptAttributes
      * @param string $size
      * @param string $theme
      * @param string $badge
      * @param bool $instantRender
      * @return string
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \yii\base\Exception
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    private static function _getV2Tag(string $id, string $siteKey, array $options, string $scriptAttributes, string $size, string $theme, string $badge, bool $instantRender): string
-    {
+    private static function _getV2Tag(
+        string $id,
+        string $siteKey,
+        array $options,
+        string $scriptAttributes,
+        string $size,
+        string $theme,
+        string $badge,
+        bool $instantRender,
+    ): string {
         return Craft::$app->getView()->renderTemplate('google-recaptcha/tags/v2', [
             'callbackName' => StringHelper::camelCase($id),
             'id' => $id,
@@ -134,5 +160,23 @@ class GoogleRecaptchaVariable
             'badge' => $badge,
             'instantRender' => $instantRender,
         ], View::TEMPLATE_MODE_CP);
+    }
+
+    /**
+     * Return the version setting
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return GoogleRecaptcha::$plugin->getSettings()->version;
+    }
+
+    /**
+     * Return the parsed siteKey setting
+     * @return string
+     */
+    public function getSiteKey(): string
+    {
+        return App::parseEnv(GoogleRecaptcha::$plugin->getSettings()->siteKey);
     }
 }

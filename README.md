@@ -129,6 +129,17 @@ the [Sherlock](https://plugins.craftcms.com/sherlock) security plugin, you could
 {{ craft.googleRecaptcha.render({scriptOptions: {'nonce': nonce}}) }}
 ```
 
+#### Custom reCAPTCHA Widget
+
+If the default widget generation using the Twig command `craft.googleRecaptcha.render` does not meet your needs, you
+can generate your own using the plugin settings:
+
+* Get the API Version (ie `2` or `3`): `{{ craft.googleRecaptcha.version }}`
+* Get the Site Key (parsed value): `{{ craft.googleRecaptcha.siteKey }}`
+
+> 💡 If you need even more detailed configuration, you can still access every plugin settings by using
+`{{ craft.app.plugins.plugin('google-recaptcha').settings }}`
+
 ### Verify users submissions
 
 To validate a user submission on server side, you can use the built-in method:
@@ -137,7 +148,8 @@ To validate a user submission on server side, you can use the built-in method:
 GoogleRecaptcha::$plugin->recaptcha->verify();
 ```
 
-For example, in a [module](https://craftcms.com/docs/5.x/extend/module-guide.html) controller, you could do something like this:
+For example, in a [module](https://craftcms.com/docs/5.x/extend/module-guide.html) controller, you could do something
+like this:
 
 ```php
 public function actionSubmitForm() {
