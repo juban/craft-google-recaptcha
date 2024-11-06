@@ -97,7 +97,7 @@ For example, to provide a container id, you can do:
 
 ##### Action
 
-An `[action](https://developers.google.com/recaptcha/docs/v3?hl=fr#actions)` property can be provided as follow:
+An [`action`](https://developers.google.com/recaptcha/docs/v3?hl=fr#actions) property can be provided as follow:
 
 ```twig
 {{ craft.googleRecaptcha.render({id: 'recaptcha-widget', action: 'some_action_name'}) }}
