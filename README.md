@@ -11,7 +11,7 @@ and v3, including checkbox badge and invisible flavors.
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0 or later and PHP 8.0.2 or later.
+This plugin requires Craft CMS 4 or 5 and PHP 8.0.2 or later.
 
 To use the plugin, you will need to get an API site key and secret key which you can
 configure [here](https://www.google.com/recaptcha/admin).
