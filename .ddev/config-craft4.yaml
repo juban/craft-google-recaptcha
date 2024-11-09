@@ -1,7 +1,7 @@
-name: googlerecaptcha-craft5
+name: googlerecaptcha-craft4
 type: php
 docroot: ""
-php_version: "8.2"
+php_version: "8.1"
 webserver_type: nginx-fpm
 xdebug_enabled: true
 additional_hostnames: []
